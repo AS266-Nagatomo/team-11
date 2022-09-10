@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="/static/styles.css" rel="stylesheet">
+        <link href="/static/styles.js" rel="stylesheet">
+        <title>Nobel</title>
+    </head>
+    <body>
+        <div class="header_genre">
+            <h1><a href="/">Nobel</a></h1>
+            <form action="/Nobel"method="post">
+                <select class="sort_genre"name="sort_nobel">
+                    <option value="sort_title_nobel">title</option>
+                    <option value="sort_point_nobel">point</option>
+                    <option value="sort_when_nobel">when</option>
+                </select>
+                <input class="sort_genre"type="submit" value="sort">
+            </form>
+        </div>
+
+        <div class="section">
+            <div class="nobel_only">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>title</th>
+                        <th>point</th>
+                        <th>when</th>
+                        <th>record</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for nobel in nobels %}
+                        <tr>
+                            <td>{{nobel.title}}</td>
+                            <td>{{nobel.point}}</td>
+                            <td>{{nobel.datetime}}</td>
+                            <td>{{nobel.reputation}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </body>
+</html>

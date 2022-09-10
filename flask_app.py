@@ -14,13 +14,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Configure CS50 Library to use SQLite database
 dbname = 'reading_record.db'
-conn = sqlite3.connect(dbname)
-# sqliteを操作するカーソルオブジェクトを作成
-db = conn.cursor()
 
-"""db.execute('CREATE TABLE anime(id INTEGER PRIMARY KEY NOT NULL, title TEXT NOT NULL, Reputation TEXT NOT NULL, datetime DATETIME, point INTEGER)')
-db.execute('CREATE TABLE nobel(id INTEGER PRIMARY KEY NOT NULL, title TEXT NOT NULL, Reputation TEXT NOT NULL, datetime DATETIME, point INTEGER)')
-db.execute('CREATE TABLE movie(id INTEGER PRIMARY KEY NOT NULL, title TEXT NOT NULL, Reputation TEXT NOT NULL, datetime DATETIME, point INTEGER)')"""
 @app.after_request
 def after_request(response):
     """Ensure responses aren't cached"""
@@ -31,6 +25,10 @@ def after_request(response):
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    print("aaa")
+    conn = sqlite3.connect(dbname)
+    # sqliteを操作するカーソルオブジェクトを作成
+    db = conn.cursor()
     if request.method == "POST":
         type = request.form.get("type")
         title = request.form.get("title")
@@ -125,14 +123,17 @@ def index():
                 return render_template("index.html", nobels=nobels, animes=animes, movies=movies)
         return redirect("/")
     else:
-        nobels = db.execute("SELECT * FROM nobel")
-        movies = db.execute("SELECT * FROM movie ")
-        animes = db.execute("SELECT * FROM anime")
+        nobels = db.execute("SELECT * FROM nobel").fetchall()
+        movies = db.execute("SELECT * FROM movie").fetchall()
+        animes = db.execute("SELECT * FROM anime").fetchall()
         conn.commit()
         return render_template("index.html", nobels=nobels, animes=animes, movies=movies)
 
 @app.route("/Nobel", methods=["GET", "POST"])
 def nobel():
+    conn = sqlite3.connect(dbname)
+    # sqliteを操作するカーソルオブジェクトを作成
+    db = conn.cursor()
     if request.method == "GET":
         nobels = db.execute("SELECT * FROM nobel")
         return render_template("nobel.html", nobels=nobels)
@@ -152,6 +153,9 @@ def nobel():
 
 @app.route("/Anime", methods=["GET", "POST"])
 def anime():
+    conn = sqlite3.connect(dbname)
+    # sqliteを操作するカーソルオブジェクトを作成
+    db = conn.cursor()
     if request.method == "GET":
         animes = db.execute("SELECT * FROM anime")
         return render_template("anime.html", animes=animes)
@@ -171,6 +175,9 @@ def anime():
 
 @app.route("/Movie", methods=["GET", "POST"])
 def movie():
+    conn = sqlite3.connect(dbname)
+    # sqliteを操作するカーソルオブジェクトを作成
+    db = conn.cursor()
     if request.method == "GET":
         movies = db.execute("SELECT * FROM movie")
         return render_template("movie.html", movies=movies)
