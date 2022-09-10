@@ -1,54 +1,52 @@
 <!DOCTYPE html>
-<!-- saved from url=(0094)https://www.pythonanywhere.com/user/AS090Goto/files/home/AS090Goto/mysite/templates/index.html -->
-<html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="./Reading record_files/css2" rel="stylesheet">
-        <link href="./Reading record_files/styles.css" rel="stylesheet">
+
+<html lang="ja">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="/static/styles.css" rel="stylesheet">
+        <link href="/static/styles.js" rel="stylesheet">
         <title>Reading record</title>
     </head>
     <body>
         <div class="header">
             <h1>Reading record</h1>
-            <form action="https://www.pythonanywhere.com/" method="post">
-                <select class="main" name="submit">
+            <form action="/"method="post">
+                <select class="main"name="submit">
                     <option value="add">Add</option>
                     <option value="delete">Delete</option>
                 </select>
-                <select class="main" name="type">
+                <select class="main"name="type">
                     <option value="movie">Movie</option>
                     <option value="anime">Anime</option>
                     <option value="nobel">Nobel</option>
                 </select>
-                <input class="main" name="title" placeholder="Title" type="text">
-                <input class="main" name="reputation" placeholder="Record" type="text">
-                <input class="main" name="point" placeholder="point" type="number" min="1" max="10">
-                <input class="main" type="submit" value="submit">
+                <input class="main"name="title" placeholder="Title" type="text">
+                <input class="main"name="reputation" placeholder="Record" type="text">
+                <input class="main"name="point" placeholder="point" type="number" min="1" max="10">
+                <input class="main"type="submit" value="submit">
 
             </form>
 
-            <form action="https://www.pythonanywhere.com/" method="post">
-                <select class="main" name="sort">
+            <form action="/"method="post">
+                <select class="main"name="sort">
                     <option value="sort_title">title</option>
                     <option value="sort_point">point</option>
                     <option value="sort_when">when</option>
                 </select>
 
-                <select class="main" name="sort_genre">
+                <select class="main"name="sort_genre">
                     <option value="sort_Movie">Movie</option>
                     <option value="sort_Anime">Anime</option>
                     <option value="sort_Nobel">Nobel</option>
                 </select>
-                <input class="main" type="submit" value="sort">
+                <input class="main"type="submit" value="sort">
             </form>
         </div>
 
         <div class="section">
             <div class="nobel">
-                <h2><a href="https://www.pythonanywhere.com/Nobel">Nobel</a></h2>
-            
-                    {% for nobel in nobels %}
-                        
-                    {% endfor %}
-                <table>
+                <h2><a href="/Nobel">Nobel</a></h2>
+            <table>
                 <thead>
                     <tr>
                         <th>title</th>
@@ -56,21 +54,21 @@
                         <th>when</th>
                     </tr>
                 </thead>
-                <tbody><tr>
+                <tbody>
+                    {% for nobel in nobels %}
+                        <tr>
                             <td>{{nobel.title}}</td>
                             <td>{{nobel.point}}</td>
                             <td>{{nobel.datetime}}</td>
-                        </tr></tbody>
+                        </tr>
+                    {% endfor %}
+                </tbody>
             </table>
             </div>
 
             <div class="anime">
-                <h2><a href="https://www.pythonanywhere.com/Anime">Anime</a></h2>
-            
-                    {% for anime in animes %}
-                        
-                    {% endfor %}
-                <table>
+                <h2><a href="/Anime">Anime</a></h2>
+            <table >
                 <thead>
                     <tr>
                         <th>title</th>
@@ -78,21 +76,21 @@
                         <th>when</th>
                     </tr>
                 </thead>
-                <tbody><tr>
+                <tbody>
+                    {% for anime in animes %}
+                        <tr>
                             <td>{{anime.title}}</td>
                             <td>{{anime.point}}</td>
                             <td>{{anime.datetime}}</td>
-                        </tr></tbody>
+                        </tr>
+                    {% endfor %}
+                </tbody>
             </table>
             </div>
 
             <div class="movie">
-                <h2><a href="https://www.pythonanywhere.com/Movie">Movie</a></h2>
-            
-                    {% for movie in movies %}
-                        
-                    {% endfor %}
-                <table>
+                <h2><a href="/Movie">Movie</a></h2>
+            <table>
                 <thead>
                     <tr>
                         <th>title</th>
@@ -100,13 +98,17 @@
                         <th>when</th>
                     </tr>
                 </thead>
-                <tbody><tr>
+                <tbody>
+                    {% for movie in movies %}
+                        <tr>
                             <td>{{movie.title}}</td>
                             <td>{{movie.point}}</td>
                             <td>{{movie.datetime}}</td>
-                        </tr></tbody>
+                        </tr>
+                    {% endfor %}
+                </tbody>
             </table>
             </div>
         </div>
-    
-</body></html>
+    </body>
+</html>
