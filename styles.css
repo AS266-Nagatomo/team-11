@@ -1,0 +1,88 @@
+.header {
+    color: #ff0000;
+    margin-bottom: 2rem;
+    padding: 2rem 1rem;
+    text-align: center;
+    font-size: 30px;
+}
+
+.main {
+  font-size: 20px;
+}
+
+.header_genre {
+    color: #dc143c;
+    margin-bottom: 2rem;
+    padding: 2rem 1rem;
+    text-align: center;
+    font-size: 30px;
+}
+
+.sort_genre {
+  font-size: 20px;
+}
+
+.section{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+h2 {
+  font-size: 40px;
+  color: #ff0000;
+  text-decoration: none;
+}
+
+a{
+  color: #ff0000;
+  text-decoration: none;
+}
+
+.nobel{
+    width: 33%;
+    text-align: center;
+}
+.nobel_only{
+  text-align: center;
+}
+
+.anime{
+    width: 33%;
+    text-align: center;
+
+}
+
+.movie{
+    width: 33%;
+    text-align: center;
+}
+
+body{
+  background-size: cover;
+  background-image: url("/static/24397069_l.jpg");
+}
+
+table{
+    border-collapse:separate;
+    border-spacing: 5px;
+    width: 100%;
+
+  }
+
+table th,table td{
+    border-radius: 5px;
+    text-align: center;
+    padding: 10px 0;
+  }
+
+table th{
+    background-color: #c79852;
+    color: white;
+    border:solid 1px #927141;
+  }
+
+table td{
+    background-color: #e4d4bc;
+    border:solid 1px #af9d85;
+  }
+
