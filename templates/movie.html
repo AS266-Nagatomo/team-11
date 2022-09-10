@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="/static/styles.css" rel="stylesheet">
+        <link href="/static/styles.js" rel="stylesheet">
+        <title>Movie</title>
+    </head>
+    <body>
+        <div class="header_genre">
+            <h1><a href="/">Movie</a></h1>
+            <form action="/Movie"method="post">
+                <select class="sort_genre"name="sort_movie">
+                    <option value="sort_title_movie">title</option>
+                    <option value="sort_point_movie">point</option>
+                    <option value="sort_when_movie">when</option>
+                </select>
+                <input class="sort_genre"type="submit" value="sort">
+            </form>
+        </div>
+
+        <div class="section">
+            <div class="nobel_only">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>title</th>
+                        <th>point</th>
+                        <th>when</th>
+                        <th>record</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for movie in movies %}
+                        <tr>
+                            <td>{{movie.title}}</td>
+                            <td>{{movie.point}}</td>
+                            <td>{{movie.datetime}}</td>
+                            <td>{{movie.reputation}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </body>
+</html>

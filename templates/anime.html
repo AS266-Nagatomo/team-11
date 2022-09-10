@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="/static/styles.css" rel="stylesheet">
+        <link href="/static/styles.js" rel="stylesheet">
+        <title>Anime</title>
+    </head>
+    <body>
+        <div class="header_genre">
+            <h1><a href="/">Anime</a></h1>
+            <form action="/Anime"method="post">
+                <select class="sort_genre"name="sort_anime">
+                    <option value="sort_title_anime">title</option>
+                    <option value="sort_point_anime">point</option>
+                    <option value="sort_when_anime">when</option>
+                </select>
+                <input class="sort_genre"type="submit" value="sort">
+            </form>
+        </div>
+
+        <div class="section">
+            <div class="nobel_only">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>title</th>
+                        <th>point</th>
+                        <th>when</th>
+                        <th>record</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for anime in animes %}
+                        <tr>
+                            <td>{{anime.title}}</td>
+                            <td>{{anime.point}}</td>
+                            <td>{{anime.datetime}}</td>
+                            <td>{{anime.reputation}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </body>
+</html>
