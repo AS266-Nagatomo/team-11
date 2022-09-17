@@ -16,14 +16,21 @@ dbname = 'reading_record.db'
 
 login_maneger = LoginManager()
 login_maneger.init_app(app)
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), unique=True)
     password = db.Column(db.String(12), unique=True)
 
+
+
 @login_maneger.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+@login_maneger.unauthorized_handler
+def unauthorized():
+    return redirect('/login')
 
 @app.after_request
 def after_request(response):
@@ -52,11 +59,12 @@ def signup():
 @app.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == "POST":
+        print(request.form)
         username= request.form.get('username')
         password = request.form.get('password')
 
         user = User.query.filter_by(username=username).first()
-        if check_password_hash(user.password, password):
+        if user is not None and  check_password_hash(user.password, password):
             login_user(user)
             return redirect('/')
         return redirect('/login')
@@ -72,6 +80,7 @@ def logout():
 
 
 @app.route("/", methods=["GET", "POST"])
+@login_required 
 def index():
     print("aaa")
     conn = sqlite3.connect(dbname)
