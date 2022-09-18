@@ -12,7 +12,7 @@ app.config['SECRET_KEY'] = os.urandom(24)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 db = SQLAlchemy(app)
-dbname = 'reading_record.db'
+dbname = 'user.db'
 
 login_maneger = LoginManager()
 login_maneger.init_app(app)
@@ -21,6 +21,30 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), unique=True)
     password = db.Column(db.String(12), unique=True)
+
+class anime(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(30),)
+    reputation = db.Column(db.String(50), unique=True)
+    datetime = db.Column(db.DateTime)
+    point = db.Column(db.Integer)
+    user_id = db.Column(db.Integer)
+
+class nobel(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(30),)
+    reputation = db.Column(db.String(50), unique=True)
+    datetime = db.Column(db.DateTime)
+    point = db.Column(db.Integer)
+    user_id = db.Column(db.Integer)
+
+class movie(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(30),)
+    reputation = db.Column(db.String(50), unique=True)
+    datetime = db.Column(db.DateTime)
+    point = db.Column(db.Integer)
+    user_id = db.Column(db.Integer)
 
 
 
@@ -31,15 +55,6 @@ def load_user(user_id):
 @login_maneger.unauthorized_handler
 def unauthorized():
     return redirect('/login')
-
-@app.after_request
-def after_request(response):
-    """Ensure responses aren't cached"""
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Expires"] = 0
-    response.headers["Pragma"] = "no-cache"
-    return response
-
 
 
 @app.route('/signup', methods=["GET", "POST"])
@@ -80,7 +95,7 @@ def logout():
 
 
 @app.route("/", methods=["GET", "POST"])
-@login_required 
+@login_required
 def index():
     print("aaa")
     conn = sqlite3.connect(dbname)
@@ -93,6 +108,9 @@ def index():
         point = request.form.get("point")
         submit = request.form.get("submit")
         time = datetime.date.today()
+        Anime = anime()
+        Movie = movie()
+        Nobel = nobel()
 
         if type == "movie":
             if submit == "delete":
@@ -103,7 +121,13 @@ def index():
                 return redirect("/")
             else:
                 if submit == "add":
-                    db2.execute("INSERT INTO  movie (title, reputation, point, datetime) VALUES(?, ?, ?, ?)", (title, reputation, point, time))
+                    """db2.execute("INSERT INTO  movie (title, reputation, point, datetime) VALUES(?, ?, ?, ?)", (title, reputation, point, time))"""
+                    Movie.title = title
+                    Movie.reputation = reputation
+                    Movie.point = point
+                    Movie.datetime = time
+                    db.session.add(Movie)
+                    db.session.commit()
         elif type == "nobel":
             if submit == "delete":
                 db2.execute("DELETE FROM  nobel WHERE title = ?", title)
