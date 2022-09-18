@@ -10,3 +10,4 @@ if __name__ == "__main__":
     db.execute('CREATE TABLE anime(id INTEGER PRIMARY KEY NOT NULL, title TEXT NOT NULL, reputation TEXT NOT NULL, datetime DATETIME, point INTEGER)')
     db.execute('CREATE TABLE nobel(id INTEGER PRIMARY KEY NOT NULL, title TEXT NOT NULL, reputation TEXT NOT NULL, datetime DATETIME, point INTEGER)')
     db.execute('CREATE TABLE movie(id INTEGER PRIMARY KEY NOT NULL, title TEXT NOT NULL, reputation TEXT NOT NULL, datetime DATETIME, point INTEGER)')
+    
