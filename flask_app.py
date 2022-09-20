@@ -1,7 +1,7 @@
 import os
 from flask import Flask,  redirect, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required
+from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__, static_url_path='/',)
@@ -106,7 +106,6 @@ def get_mypage():
         title = request.form.get("title")
         reputation= request.form.get("reputation")
         point = request.form.get("point")
-        """id = User.id"""
         anime = Anime()
         movie = Movie()
         book = Book()
@@ -114,7 +113,7 @@ def get_mypage():
         if genre == "movie":
             movie.title = title
             movie.reputation = reputation
-            """movie.user_id = id"""
+            movie.user_id = current_user.id
             movie.point = point
             db.session.add(movie)
             db.session.commit()
@@ -122,14 +121,14 @@ def get_mypage():
             book.title = title
             book.reputation = reputation
             book.point = point
-            """book.user_id = id"""
+            book.user_id = current_user.id
             db.session.add(book)
             db.session.commit()
         elif genre == "anime":
             anime.title = title
             anime.reputation = reputation
             anime.point = point
-            """anime.user_id = id"""
+            anime.user_id = current_user.id
             db.session.add(anime)
             db.session.commit()
     else:
@@ -142,7 +141,7 @@ def get_mypage():
 @login_required
 def get_books():
     books = db.session.query(Book).all()
-    """books = db.session.query(Book).filter(Book.user_id==User.id).all()"""
+    books = db.session.query(Book).filter(Book.user_id==current_user.id).all()
     if request.method == "GET":
         return render_template("Book.html", books=books)
     return render_template("Book.html")
@@ -151,7 +150,7 @@ def get_books():
 @app.route("/Anime", methods=["GET", "POST"])
 @login_required
 def get_animes():
-    """animes = db.session.query(Anime).filter(Anime.user_id==User.id).all()"""
+    animes = db.session.query(Anime).filter(Anime.user_id==current_user.id).all()
     animes = db.session.query(Anime).all()
     if request.method == "GET":
         return render_template("anime.html", animes=animes)
@@ -161,7 +160,7 @@ def get_animes():
 @app.route("/Movie", methods=["GET", "POST"])
 @login_required
 def get_movies():
-    """movies = db.session.query(Movie).filter(Movie.user_id==User.id).all()"""
+    movies = db.session.query(Movie).filter(Movie.user_id==current_user.id).all()
     movies = db.session.query(Movie).all()
     if request.method == "GET":
         return render_template("movie.html", movies=movies)
