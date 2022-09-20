@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Reading-Record/My page/Book</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="思い出を記録します">
+<meta name="keywords" content="映画,本,マンガ,アニメ,記録">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/openclose.js"></script>
+<script src="js/fixmenu_pagetop.js"></script>
+<link rel="stylesheet" type="text/css" href="css/list.css">
+</head>
+
+<body>
+
+<div id="container">
+
+<header>
+<h1 id="logo"><a href="index.html"><img src="images/logo.png" alt="logo"></a></h1>
+</header>
+
+<!--開閉メニュー-->
+<nav id="menubar">
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="My page.html">My page</a></li>
+        <br>
+        <li><a href="Movie.html">Movie</a></li>
+        <li><a href="Book.html">Book</a></li>
+        <li><a href="Anime.html">Anime</a></li>
+        <br>
+        <li><a href="#">Sign out</a></li>
+    </ul>
+</nav>
+
+<div id="book-page">
+
+    <section class="centering_parent">
+        <button class="cta">
+            <span> <a class="under" href="Movie.html">Movie</a></span>
+            <svg viewBox="0 0 13 10" height="10px" width="15px">
+              <path d="M1,5 L11,5"></path>
+              <polyline points="8 1 12 5 8 9"></polyline>
+            </svg>
+        </button>
+        <button class="cta">
+            <span><a class="under" href="Book.html">Book</a></span>
+            <svg viewBox="0 0 13 10" height="10px" width="15px">
+                <path d="M1,5 L11,5"></path>
+                <polyline points="8 1 12 5 8 9"></polyline>
+            </svg>
+        </button>
+        <button class="cta">
+            <span><a class="under" href="Anime.html">Anime</a></span>
+            <svg viewBox="0 0 13 10" height="10px" width="15px">
+                <path d="M1,5 L11,5"></path>
+                <polyline points="8 1 12 5 8 9"></polyline>
+            </svg>
+        </button>
+        
+    </section>       
+    
+
+<section>
+<h2>Book<br><span>書籍</span></h2>
+</div>
+</section>
+
+<section>
+    <div>
+        <ul class="accordion-area">
+
+            <li><!--li ~ /li までが一つのアコーディオン-->
+                <section>
+                <h3 class="accordion_title">羅生門&emsp;( 100pt )</h3>
+                <!--<p class="score">100pt</p>-->
+                    <div class="box">
+                    <p>すごくおもしろい</p>
+                    </div>
+                </section>
+            </li>
+
+            <li>
+            <section>
+                <h3 class="accordion_title">タイトル&emsp;(点数pt)</h3>
+                <div class="box">
+                <p>内容が入ります。</p>
+                </div>
+                </section>
+            </li>
+
+            <li>
+                <section>
+                <h3 class="accordion_title">タイトル&emsp;(点数pt)</h3>
+                    <div class="box">
+                    <p>内容が入ります。</p>
+                    </div>
+                </section>
+            </li>
+
+        </ul>
+    </div>
+</section>
+
+<footer>
+<small>Copyright&copy; <a href="index.html">Reading-Record</a> All Rights Reserved.</small>
+<span class="pr"><a href="https://template-party.com/" target="_blank">《Web Design:Template-Party》</a></span>
+</footer>
+
+<p class="nav-fix-pos-pagetop"><a href="#">↑</a></p>
+
+<!--メニュー開閉ボタン-->
+<div id="menubar_hdr" class="close"></div>
+
+<!--メニューの開閉処理-->
+<script>
+open_close("menubar_hdr", "menubar");
+</script>
+
+<!--lightbox用jsファイルの読み込み-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox-plus-jquery.min.js"></script>
+
+<!--list用JS-->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="js/list.js"></script>
+
+</body>
+</html>
