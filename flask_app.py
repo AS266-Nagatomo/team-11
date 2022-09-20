@@ -6,13 +6,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user.db'
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 db = SQLAlchemy(app)
 dbname = 'user.db'
+
 
 login_maneger = LoginManager()
 login_maneger.init_app(app)
@@ -57,37 +58,38 @@ def load_user(user_id):
 
 @login_maneger.unauthorized_handler
 def unauthorized():
-    return redirect('/login')
+    return redirect('/sign-in')
 
 
-@app.route('/signup', methods=["GET", "POST"])
+@app.route('/sign-up', methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
-        username= request.form.get('username')
+        username= request.form.get('user-name')
         password = request.form.get('password')
+        repassword = request.form.get('re:password')
 
         user = User(username=username, password=generate_password_hash(password, method='sha256'))
 
         db.session.add(user)
         db.session.commit()
-        return redirect('/login')
+        return redirect('/sign-in')
     else:
-        return render_template('signup.html')
+        return render_template('sign-up.html')
 
-@app.route('/login', methods=["GET", "POST"])
+@app.route('/sign-in', methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         print(request.form)
-        username= request.form.get('username')
+        username= request.form.get('user-name')
         password = request.form.get('password')
 
         user = User.query.filter_by(username=username).first()
         if user is not None and  check_password_hash(user.password, password):
             login_user(user)
             return redirect('/')
-        return redirect('/login')
+        return redirect('/sign-up')
     else:
-        return render_template('login.html')
+        return render_template('/sign-in.html')
 
 
 @app.route('/logout')
