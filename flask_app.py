@@ -140,7 +140,6 @@ def get_mypage():
 @app.route("/Book", methods=["GET", "POST"])
 @login_required
 def get_books():
-    books = db.session.query(Book).all()
     books = db.session.query(Book).filter(Book.user_id==current_user.id).all()
     if request.method == "GET":
         return render_template("Book.html", books=books)
@@ -151,7 +150,6 @@ def get_books():
 @login_required
 def get_animes():
     animes = db.session.query(Anime).filter(Anime.user_id==current_user.id).all()
-    animes = db.session.query(Anime).all()
     if request.method == "GET":
         return render_template("anime.html", animes=animes)
     return render_template("anime.html")
@@ -161,7 +159,6 @@ def get_animes():
 @login_required
 def get_movies():
     movies = db.session.query(Movie).filter(Movie.user_id==current_user.id).all()
-    movies = db.session.query(Movie).all()
     if request.method == "GET":
         return render_template("movie.html", movies=movies)
     return render_template("movie.html")
