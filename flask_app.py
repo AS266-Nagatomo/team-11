@@ -22,7 +22,8 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(30), unique=True)
     password = db.Column(db.String(12), unique=True)
 
-class anime(db.Model):
+class Anime(db.Model):
+    __tablename__ = 'anime'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30),)
     reputation = db.Column(db.String(50), unique=True)
@@ -30,7 +31,8 @@ class anime(db.Model):
     point = db.Column(db.Integer)
     user_id = db.Column(db.Integer)
 
-class nobel(db.Model):
+class Nobel(db.Model):
+    __tablename__ = 'nobel'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30),)
     reputation = db.Column(db.String(50), unique=True)
@@ -38,7 +40,8 @@ class nobel(db.Model):
     point = db.Column(db.Integer)
     user_id = db.Column(db.Integer)
 
-class movie(db.Model):
+class Movie(db.Model):
+    __tablename__ = 'movie'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30),)
     reputation = db.Column(db.String(50), unique=True)
@@ -108,25 +111,26 @@ def index():
         point = request.form.get("point")
         submit = request.form.get("submit")
         time = datetime.date.today()
-        Anime = anime()
-        Movie = movie()
-        Nobel = nobel()
+        anime = Anime()
+        movie = Movie()
+        nobel = Nobel()
 
         if type == "movie":
             if submit == "delete":
-                db2.execute("DELETE FROM  movie WHERE title = ?", title)
+                """db2.execute("DELETE FROM  movie WHERE title = ?", title, )"""
+                db.session.query(movie).filter_by(movie.title==title).delete()
+                db.session.commit()
             if len(title) == 0 :
                 return redirect("/")
             if len(point) == 0:
                 return redirect("/")
             else:
                 if submit == "add":
-                    """db2.execute("INSERT INTO  movie (title, reputation, point, datetime) VALUES(?, ?, ?, ?)", (title, reputation, point, time))"""
-                    Movie.title = title
-                    Movie.reputation = reputation
-                    Movie.point = point
-                    Movie.datetime = time
-                    db.session.add(Movie)
+                    movie.title = title
+                    movie.reputation = reputation
+                    movie.point = point
+                    movie.datetime = time
+                    db.session.add(movie)
                     db.session.commit()
         elif type == "nobel":
             if submit == "delete":
@@ -212,7 +216,7 @@ def index():
 
 @app.route("/Nobel", methods=["GET", "POST"])
 @login_required
-def nobel():
+def get_nobels():
     conn = sqlite3.connect(dbname)
     # sqliteを操作するカーソルオブジェクトを作成
     db2 = conn.cursor()
@@ -235,7 +239,7 @@ def nobel():
 
 @app.route("/Anime", methods=["GET", "POST"])
 @login_required
-def anime():
+def get_animes():
     conn = sqlite3.connect(dbname)
     # sqliteを操作するカーソルオブジェクトを作成
     db2 = conn.cursor()
@@ -258,7 +262,7 @@ def anime():
 
 @app.route("/Movie", methods=["GET", "POST"])
 @login_required
-def movie():
+def get_movies():
     conn = sqlite3.connect(dbname)
     # sqliteを操作するカーソルオブジェクトを作成
     db2 = conn.cursor()
