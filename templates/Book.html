@@ -19,20 +19,20 @@
 <div id="container">
 
 <header>
-<h1 id="logo"><a href="index.html"><img src="images/logo.png" alt="logo"></a></h1>
+<h1 id="logo"><a href="/"><img src="images/logo.png" alt="logo"></a></h1>
 </header>
 
 <!--開閉メニュー-->
 <nav id="menubar">
     <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="My page.html">My page</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/Mypage">My page</a></li>
         <br>
-        <li><a href="Movie.html">Movie</a></li>
-        <li><a href="Book.html">Book</a></li>
-        <li><a href="Anime.html">Anime</a></li>
+        <li><a href="/Movie">Movie</a></li>
+        <li><a href="/Book">Book</a></li>
+        <li><a href="/Anime">Anime</a></li>
         <br>
-        <li><a href="#">Sign out</a></li>
+        <li><a href="/sign-out">Sign out</a></li>
     </ul>
 </nav>
 
@@ -40,29 +40,28 @@
 
     <section class="centering_parent">
         <button class="cta">
-            <span> <a class="under" href="Movie.html">Movie</a></span>
+            <span> <a class="under" href="/Movie">Movie</a></span>
             <svg viewBox="0 0 13 10" height="10px" width="15px">
               <path d="M1,5 L11,5"></path>
               <polyline points="8 1 12 5 8 9"></polyline>
             </svg>
         </button>
         <button class="cta">
-            <span><a class="under" href="Book.html">Book</a></span>
+            <span><a class="under" href="/Book">Book</a></span>
             <svg viewBox="0 0 13 10" height="10px" width="15px">
                 <path d="M1,5 L11,5"></path>
                 <polyline points="8 1 12 5 8 9"></polyline>
             </svg>
         </button>
         <button class="cta">
-            <span><a class="under" href="Anime.html">Anime</a></span>
+            <span><a class="under" href="/Anime">Anime</a></span>
             <svg viewBox="0 0 13 10" height="10px" width="15px">
                 <path d="M1,5 L11,5"></path>
                 <polyline points="8 1 12 5 8 9"></polyline>
             </svg>
         </button>
-        
-    </section>       
-    
+    </section>
+
 
 <section>
 <h2>Book<br><span>書籍</span></h2>
@@ -83,30 +82,23 @@
                 </section>
             </li>
 
-            <li>
-            <section>
-                <h3 class="accordion_title">タイトル&emsp;(点数pt)</h3>
-                <div class="box">
-                <p>内容が入ります。</p>
-                </div>
-                </section>
-            </li>
-
+            {% for book in books %}
             <li>
                 <section>
-                <h3 class="accordion_title">タイトル&emsp;(点数pt)</h3>
+                <h3 class="accordion_title">{{book.title}}&emsp;( {{book.point}} pt )</h3>
                     <div class="box">
-                    <p>内容が入ります。</p>
+                    <p>{{book.reputation}}</p>
                     </div>
                 </section>
             </li>
+            {% endfor %}
 
         </ul>
     </div>
 </section>
 
 <footer>
-<small>Copyright&copy; <a href="index.html">Reading-Record</a> All Rights Reserved.</small>
+<small>Copyright&copy; <a href="/">Reading-Record</a> All Rights Reserved.</small>
 <span class="pr"><a href="https://template-party.com/" target="_blank">《Web Design:Template-Party》</a></span>
 </footer>
 

@@ -1,12 +1,10 @@
 import os
-import datetime
-import sqlite3
-from flask import Flask,  redirect, render_template, request
+from flask import Flask,  redirect, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required
+from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
-app = Flask(__name__, static_url_path='/')
+app = Flask(__name__, static_url_path='/',)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user.db'
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -28,16 +26,14 @@ class Anime(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30),)
     reputation = db.Column(db.String(50), unique=True)
-    datetime = db.Column(db.DateTime)
     point = db.Column(db.Integer)
     user_id = db.Column(db.Integer)
 
-class Nobel(db.Model):
-    __tablename__ = 'nobel'
+class Book(db.Model):
+    __tablename__ = 'book'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30),)
     reputation = db.Column(db.String(50), unique=True)
-    datetime = db.Column(db.DateTime)
     point = db.Column(db.Integer)
     user_id = db.Column(db.Integer)
 
@@ -46,9 +42,9 @@ class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30),)
     reputation = db.Column(db.String(50), unique=True)
-    datetime = db.Column(db.DateTime)
     point = db.Column(db.Integer)
     user_id = db.Column(db.Integer)
+
 
 
 
@@ -67,9 +63,7 @@ def signup():
         username= request.form.get('user-name')
         password = request.form.get('password')
         repassword = request.form.get('re:password')
-
         user = User(username=username, password=generate_password_hash(password, method='sha256'))
-
         db.session.add(user)
         db.session.commit()
         return redirect('/sign-in')
@@ -82,7 +76,6 @@ def login():
         print(request.form)
         username= request.form.get('user-name')
         password = request.form.get('password')
-
         user = User.query.filter_by(username=username).first()
         if user is not None and  check_password_hash(user.password, password):
             login_user(user)
@@ -92,197 +85,83 @@ def login():
         return render_template('/sign-in.html')
 
 
-@app.route('/logout')
+@app.route('/sign-out')
 @login_required
 def logout():
     logout_user()
-    return redirect('/login')
+    return redirect('/sign-in')
 
 
 @app.route("/", methods=["GET", "POST"])
 @login_required
-def index():
-    print("aaa")
-    conn = sqlite3.connect(dbname)
-    # sqliteを操作するカーソルオブジェクトを作成
-    db2 = conn.cursor()
+def get_index():
+    return render_template("index.html")
+
+
+@app.route("/Mypage", methods=["GET", "POST"])
+@login_required
+def get_mypage():
     if request.method == "POST":
-        type = request.form.get("type")
+        genre = request.form.get("genre")
         title = request.form.get("title")
         reputation= request.form.get("reputation")
         point = request.form.get("point")
-        submit = request.form.get("submit")
-        time = datetime.date.today()
         anime = Anime()
         movie = Movie()
-        nobel = Nobel()
+        book = Book()
 
-        if type == "movie":
-            if submit == "delete":
-                """db2.execute("DELETE FROM  movie WHERE title = ?", title, )"""
-                db.session.query(movie).filter_by(movie.title==title).delete()
-                db.session.commit()
-            if len(title) == 0 :
-                return redirect("/")
-            if len(point) == 0:
-                return redirect("/")
-            else:
-                if submit == "add":
-                    movie.title = title
-                    movie.reputation = reputation
-                    movie.point = point
-                    movie.datetime = time
-                    db.session.add(movie)
-                    db.session.commit()
-        elif type == "nobel":
-            if submit == "delete":
-                db2.execute("DELETE FROM  nobel WHERE title = ?", title)
-            if len(title) == 0:
-                return redirect("/")
-            if len(point) == 0:
-                return redirect("/")
-            else:
-                if submit == "add":
-                   db2.execute("INSERT INTO  nobel (title, reputation, point, datetime) VALUES(?, ?, ? ,?)", (title, reputation, point, time))
-        elif type == "anime":
-            if submit == "delete":
-                db2.execute("DELETE FROM  anime WHERE title = ?", title)
-            if len(title) == 0:
-                return redirect("/")
-            if len(point) == 0:
-                return redirect("/")
-            else:
-                if submit == "add":
-                   db2.execute("INSERT INTO  anime (title, reputation, point, datetime) VALUES(?, ?, ?, ?)", (title, reputation, point, time))
-        conn.commit()
-
-        #sort
-        sort = request.form.get("sort")
-        sort_genre = request.form.get("sort_genre")
-
-        if sort == "sort_title":
-            if sort_genre == "sort_Movie":
-                nobels = db2.execute("SELECT * FROM nobel")
-                movies = db2.execute("SELECT * FROM movie ORDER BY title ")
-                animes = db2.execute("SELECT * FROM anime")
-                return render_template("index.html", nobels=nobels, animes=animes, movies=movies)
-            if sort_genre == "sort_Anime":
-                nobels = db2.execute("SELECT * FROM nobel")
-                movies = db2.execute("SELECT * FROM movie ")
-                animes = db2.execute("SELECT * FROM anime ORDER BY title")
-                return render_template("index.html", nobels=nobels, animes=animes, movies=movies)
-            if sort_genre == "sort_Nobel":
-                nobels = db2.execute("SELECT * FROM nobel order by title")
-                movies = db2.execute("SELECT * FROM movie ")
-                animes = db2.execute("SELECT * FROM anime")
-                return render_template("index.html", nobels=nobels, animes=animes, movies=movies)
-        elif sort == "sort_point":
-            if sort_genre == "sort_Movie":
-                nobels = db2.execute("SELECT * FROM nobel")
-                movies = db2.execute("SELECT * FROM movie order by point desc")
-                animes = db2.execute("SELECT * FROM anime")
-                return render_template("index.html", nobels=nobels, animes=animes, movies=movies)
-            if sort_genre == "sort_Anime":
-                nobels = db2.execute("SELECT * FROM nobel")
-                movies = db2.execute("SELECT * FROM movie ")
-                animes = db2.execute("SELECT * FROM anime order by point desc")
-                return render_template("index.html", nobels=nobels, animes=animes, movies=movies)
-            if sort_genre == "sort_Nobel":
-                nobels = db2.execute("SELECT * FROM nobel order by point desc")
-                movies = db2.execute("SELECT * FROM movie ")
-                animes = db2.execute("SELECT * FROM anime")
-                return render_template("index.html", nobels=nobels, animes=animes, movies=movies)
-        elif sort == "sort_when":
-            if sort_genre == "sort_Movie":
-                nobels = db2.execute("SELECT * FROM nobel")
-                movies = db2.execute("SELECT * FROM movie order by datetime")
-                animes = db2.execute("SELECT * FROM anime")
-                return render_template("index.html", nobels=nobels, animes=animes, movies=movies)
-            if sort_genre == "sort_Anime":
-                nobels = db2.execute("SELECT * FROM nobel")
-                movies = db2.execute("SELECT * FROM movie ")
-                animes = db2.execute("SELECT * FROM anime order by datetime")
-                return render_template("index.html", nobels=nobels, animes=animes, movies=movies)
-            if sort_genre == "sort_Nobel":
-                nobels = db2.execute("SELECT * FROM nobel order by datetime")
-                movies = db2.execute("SELECT * FROM movie ")
-                animes = db2.execute("SELECT * FROM anime ")
-                return render_template("index.html", nobels=nobels, animes=animes, movies=movies)
-        return redirect("/")
+        if genre == "movie":
+            movie.title = title
+            movie.reputation = reputation
+            movie.user_id = current_user.id
+            movie.point = point
+            db.session.add(movie)
+            db.session.commit()
+        elif genre == "book":
+            book.title = title
+            book.reputation = reputation
+            book.point = point
+            book.user_id = current_user.id
+            db.session.add(book)
+            db.session.commit()
+        elif genre == "anime":
+            anime.title = title
+            anime.reputation = reputation
+            anime.point = point
+            anime.user_id = current_user.id
+            db.session.add(anime)
+            db.session.commit()
     else:
-        nobels = db2.execute("SELECT * FROM nobel").fetchall()
-        movies = db2.execute("SELECT * FROM movie").fetchall()
-        animes = db2.execute("SELECT * FROM anime").fetchall()
-        conn.commit()
-        return render_template("index.html", nobels=nobels, animes=animes, movies=movies)
+        return render_template("Mypage.html")
+    return render_template("Mypage.html")
 
-@app.route("/Nobel", methods=["GET", "POST"])
+
+
+@app.route("/Book", methods=["GET", "POST"])
 @login_required
-def get_nobels():
-    conn = sqlite3.connect(dbname)
-    # sqliteを操作するカーソルオブジェクトを作成
-    db2 = conn.cursor()
+def get_books():
+    books = db.session.query(Book).all()
+    books = db.session.query(Book).filter(Book.user_id==current_user.id).all()
     if request.method == "GET":
-        nobels = db2.execute("SELECT * FROM nobel")
-        return render_template("nobel.html", nobels=nobels)
-    else:
-         #sort
-        sort = request.form.get("sort_nobel")
-        if sort == "sort_title_nobel":
-            nobels = db2.execute("SELECT * FROM nobel order by title")
-            return render_template("nobel.html", nobels=nobels)
-        elif sort == "sort_point_nobel":
-            nobels = db2.execute("SELECT * FROM nobel order by point desc")
-            return render_template("nobel.html", nobels=nobels)
-        elif sort == "sort_when_nobel":
-            nobels = db2.execute("SELECT * FROM nobel order by datetime")
-            return render_template("nobel.html", nobels=nobels)
-        return redirect("/Nobel")
+        return render_template("Book.html", books=books)
+    return render_template("Book.html")
+
 
 @app.route("/Anime", methods=["GET", "POST"])
 @login_required
 def get_animes():
-    conn = sqlite3.connect(dbname)
-    # sqliteを操作するカーソルオブジェクトを作成
-    db2 = conn.cursor()
+    animes = db.session.query(Anime).filter(Anime.user_id==current_user.id).all()
+    animes = db.session.query(Anime).all()
     if request.method == "GET":
-        animes = db2.execute("SELECT * FROM anime")
         return render_template("anime.html", animes=animes)
-    else:
-         #sort
-        sort = request.form.get("sort_nobel")
-        if sort == "sort_title_nobel":
-            animes = db2.execute("SELECT * FROM anime order by title")
-            return render_template("nobel.html", animes=animes)
-        elif sort == "sort_point_nobel":
-            animes = db2.execute("SELECT * FROM anime order by point desc")
-            return render_template("nobel.html", animes=animes)
-        elif sort == "sort_when_nobel":
-            animes = db2.execute("SELECT * FROM anime order by datetime")
-            return render_template("nobel.html", animes=animes)
-        return redirect("/Anime")
+    return render_template("anime.html")
+
 
 @app.route("/Movie", methods=["GET", "POST"])
 @login_required
 def get_movies():
-    conn = sqlite3.connect(dbname)
-    # sqliteを操作するカーソルオブジェクトを作成
-    db2 = conn.cursor()
+    movies = db.session.query(Movie).filter(Movie.user_id==current_user.id).all()
+    movies = db.session.query(Movie).all()
     if request.method == "GET":
-        movies = db2.execute("SELECT * FROM movie")
         return render_template("movie.html", movies=movies)
-    else:
-         #sort
-        sort = request.form.get("sort_movie")
-        if sort == "sort_title_movie":
-            movies = db2.execute("SELECT * FROM movie order by title")
-            return render_template("movie.html", movies=movies)
-        elif sort == "sort_point_movie":
-            movies = db2.execute("SELECT * FROM movie order by point desc")
-            return render_template("movie.html", movies=movies)
-        elif sort == "sort_when_movie":
-            movies = db2.execute("SELECT * FROM movie order by datetime")
-            return render_template("movie.html", movies=movies)
-        return redirect("/Movie")
-
-
+    return render_template("movie.html")

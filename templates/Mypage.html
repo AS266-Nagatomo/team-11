@@ -27,14 +27,14 @@
 <!--開閉メニュー-->
 <nav id="menubar">
   <ul>
-    <li><a href="index.html">Home</a></li>
-    <li><a href="My page.html">My page</a></li>
+    <li><a href="/">Home</a></li>
+    <li><a href="/Mypage">My page</a></li>
     <br>
-    <li><a href="Movie.html">Movie</a></li>
-    <li><a href="Book.html">Book</a></li>
-    <li><a href="Anime.html">Anime</a></li>
+    <li><a href="/Movie">Movie</a></li>
+    <li><a href="/Book">Book</a></li>
+    <li><a href="/Anime">Anime</a></li>
     <br>
-    <li><a href="#">Sign out</a></li>
+    <li><a href="/sign-out">Sign out</a></li>
   </ul>
 </nav>
 
@@ -51,15 +51,15 @@
 </center>
 
 <div class="list">
-<li><a href="Movie.html"><img src="images/icon_movie.png" alt="Movie"></a></li>
+<li><a href="/Movie"><img src="images/icon_movie.png" alt="Movie"></a></li>
 </div>
 
 <div class="list">
-<li><a href="Book.html"><img src="images/icon_book.png" alt="Book"></a></li>
+<li><a href="/Book"><img src="images/icon_book.png" alt="Book"></a></li>
 </div>
 
 <div class="list">
-<li><a href="Anime.html"><img src="images/icon_anime.png" alt="Anime"></a></li>
+<li><a href="/Anime"><img src="images/icon_anime.png" alt="Anime"></a></li>
 </div>
 
 </section>
@@ -69,9 +69,9 @@
 
     <div class="form-wrapper">
       <h1 id="form-top">思い出を追加する</h1>
-      <form>
+      <form method="POST">
         <div class="form-item">
-            <select name="ジャンル" id="sources" class="custom-select sources" placeholder="ジャンル">
+            <select name="genre" id="sources" class="custom-select sources" placeholder="ジャンル">
               <option value="movie">映画</option>
               <option value="book">書籍</option>
               <option value="anime">アニメ</option>
@@ -79,21 +79,21 @@
         </div>
         <div class="form-item">
             <label for="title"></label>
-            <input type="search" name="title" required="required" placeholder="作品のタイトル"></input>
+            <input type="search" name="title" required="required" placeholder="作品のタイトル">
         </div>
         <div class="form-item">
             <label for="comment"></label>
-            <input type="text" name="comment" required="required" placeholder="ひとことコメント"></input>
+            <input type="text" name="reputation" required="required" placeholder="ひとことコメント">
         </div>
 
         <div class="counter">
           <div class="range-slider">
             <span id="rs-bullet" class="rs-label">0</span>
-            <input id="rs-range-line" class="rs-range" required="required" type="range" value="0" min="0" max="100">
+            <input name="point"id="rs-range-line" class="rs-range" required="required" type="range" value="0" min="0" max="100">
           </div>
 
         <div class="button-panel">
-          <input type="submit" class="button" title="add" value="追加する"></input>
+          <input type="submit" class="button" title="add" value="追加する">
         </div>
 
       </form>
@@ -106,7 +106,7 @@
 <!--/#contents-->
 
 <footer>
-<small>Copyright&copy; <a href="index.html">Reading-Record</a> All Rights Reserved.</small>
+<small>Copyright&copy; <a href="/">Reading-Record</a> All Rights Reserved.</small>
 <span class="pr"><a href="https://template-party.com/" target="_blank">《Web Design:Template-Party》</a></span>
 </footer>
 
