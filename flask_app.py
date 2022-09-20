@@ -6,13 +6,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user.db'
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 db = SQLAlchemy(app)
-dbname = 'reading_record.db'
+dbname = 'user.db'
+
 
 login_maneger = LoginManager()
 login_maneger.init_app(app)
@@ -22,6 +23,33 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(30), unique=True)
     password = db.Column(db.String(12), unique=True)
 
+class Anime(db.Model):
+    __tablename__ = 'anime'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(30),)
+    reputation = db.Column(db.String(50), unique=True)
+    datetime = db.Column(db.DateTime)
+    point = db.Column(db.Integer)
+    user_id = db.Column(db.Integer)
+
+class Nobel(db.Model):
+    __tablename__ = 'nobel'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(30),)
+    reputation = db.Column(db.String(50), unique=True)
+    datetime = db.Column(db.DateTime)
+    point = db.Column(db.Integer)
+    user_id = db.Column(db.Integer)
+
+class Movie(db.Model):
+    __tablename__ = 'movie'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(30),)
+    reputation = db.Column(db.String(50), unique=True)
+    datetime = db.Column(db.DateTime)
+    point = db.Column(db.Integer)
+    user_id = db.Column(db.Integer)
+
 
 
 @login_maneger.user_loader
@@ -30,46 +58,38 @@ def load_user(user_id):
 
 @login_maneger.unauthorized_handler
 def unauthorized():
-    return redirect('/login')
-
-@app.after_request
-def after_request(response):
-    """Ensure responses aren't cached"""
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Expires"] = 0
-    response.headers["Pragma"] = "no-cache"
-    return response
+    return redirect('/sign-in')
 
 
-
-@app.route('/signup', methods=["GET", "POST"])
+@app.route('/sign-up', methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
-        username= request.form.get('username')
+        username= request.form.get('user-name')
         password = request.form.get('password')
+        repassword = request.form.get('re:password')
 
         user = User(username=username, password=generate_password_hash(password, method='sha256'))
 
         db.session.add(user)
         db.session.commit()
-        return redirect('/login')
+        return redirect('/sign-in')
     else:
-        return render_template('signup.html')
+        return render_template('sign-up.html')
 
-@app.route('/login', methods=["GET", "POST"])
+@app.route('/sign-in', methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         print(request.form)
-        username= request.form.get('username')
+        username= request.form.get('user-name')
         password = request.form.get('password')
 
         user = User.query.filter_by(username=username).first()
         if user is not None and  check_password_hash(user.password, password):
             login_user(user)
             return redirect('/')
-        return redirect('/login')
+        return redirect('/sign-up')
     else:
-        return render_template('login.html')
+        return render_template('/sign-in.html')
 
 
 @app.route('/logout')
@@ -80,7 +100,7 @@ def logout():
 
 
 @app.route("/", methods=["GET", "POST"])
-@login_required 
+@login_required
 def index():
     print("aaa")
     conn = sqlite3.connect(dbname)
@@ -93,17 +113,27 @@ def index():
         point = request.form.get("point")
         submit = request.form.get("submit")
         time = datetime.date.today()
+        anime = Anime()
+        movie = Movie()
+        nobel = Nobel()
 
         if type == "movie":
             if submit == "delete":
-                db2.execute("DELETE FROM  movie WHERE title = ?", title)
+                """db2.execute("DELETE FROM  movie WHERE title = ?", title, )"""
+                db.session.query(movie).filter_by(movie.title==title).delete()
+                db.session.commit()
             if len(title) == 0 :
                 return redirect("/")
             if len(point) == 0:
                 return redirect("/")
             else:
                 if submit == "add":
-                    db2.execute("INSERT INTO  movie (title, reputation, point, datetime) VALUES(?, ?, ?, ?)", (title, reputation, point, time))
+                    movie.title = title
+                    movie.reputation = reputation
+                    movie.point = point
+                    movie.datetime = time
+                    db.session.add(movie)
+                    db.session.commit()
         elif type == "nobel":
             if submit == "delete":
                 db2.execute("DELETE FROM  nobel WHERE title = ?", title)
@@ -188,7 +218,7 @@ def index():
 
 @app.route("/Nobel", methods=["GET", "POST"])
 @login_required
-def nobel():
+def get_nobels():
     conn = sqlite3.connect(dbname)
     # sqliteを操作するカーソルオブジェクトを作成
     db2 = conn.cursor()
@@ -211,7 +241,7 @@ def nobel():
 
 @app.route("/Anime", methods=["GET", "POST"])
 @login_required
-def anime():
+def get_animes():
     conn = sqlite3.connect(dbname)
     # sqliteを操作するカーソルオブジェクトを作成
     db2 = conn.cursor()
@@ -234,7 +264,7 @@ def anime():
 
 @app.route("/Movie", methods=["GET", "POST"])
 @login_required
-def movie():
+def get_movies():
     conn = sqlite3.connect(dbname)
     # sqliteを操作するカーソルオブジェクトを作成
     db2 = conn.cursor()

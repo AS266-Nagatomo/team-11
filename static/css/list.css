@@ -1,0 +1,120 @@
+/*アコーディオン全体*/
+.accordion-area{
+    list-style: none;
+    width: 96%;
+    max-width: 900px;
+    margin:0 auto;
+}
+
+.accordion-area li{
+    margin: 10px 0;
+}
+
+.accordion-area section {
+	border: 1px solid #ccc;
+    background: #f3f3f3;
+}
+
+/*アコーディオンタイトル*/
+.accordion_title {
+    position: relative;/*+マークの位置基準とするためrelative指定*/
+    cursor: pointer;
+    font-size:1.5rem;
+    font-weight: normal;
+    padding: 3% 3% 3% 50px;
+    transition: all .5s ease;
+}
+
+/*点数タグ*/
+/*
+.score {
+    position: relative;
+    padding: 3% 3% 3% 50px;
+    font-size:1.5rem;
+    text-align: right;
+}
+*/
+
+/*アイコンの＋と×*/
+.accordion_title::before,
+.accordion_title::after{
+    position: absolute;
+    content:'';
+    width: 15px;
+    height: 2px;
+    background-color: #333;
+
+}
+.accordion_title::before{
+    top:48%;
+    left: 15px;
+    transform: rotate(0deg);
+
+}
+.accordion_title::after{
+    top:48%;
+    left: 15px;
+    transform: rotate(90deg);
+
+}
+
+/*　accordion_closeというクラスがついたら形状変化　*/
+
+.accordion_title.accordion_close::before{
+	transform: rotate(45deg);
+}
+
+.accordion_title.accordion_close::after{
+	transform: rotate(-45deg);
+}
+
+/*アコーディオンで現れるエリア*/
+.box {
+    display: none;/*はじめは非表示*/
+    background: #f3f3f3;
+	margin:0 3% 3% 3%;
+    padding: 3%;
+}
+
+/*_____________________________________________*/
+
+#book-page {
+	padding: 5% 100px;	/*上下、左右へのコンテンツ内の余白*/
+	position: relative;
+	animation-name: opa1;		/*keyframes.cssで使う@keyframesの指定*/
+	animation-duration: 0.5S;	/*アニメーションの実行時間*/
+	animation-delay: 0.5s;		/*出現するタイミング（秒後）*/
+	animation-fill-mode: both;
+}
+/*h2タグ*/
+#book-page h2 {
+	clear: both;
+	margin-bottom: -10px;	/*下に空けるスペース*/
+	font-size: 2.25rem;		/*文字サイズ。冒頭で指定しているフォントサイズの2.25倍です。*/
+	text-align: center;		/*文字をセンタリング*/
+	letter-spacing: 0.1em;	/*文字間隔を少し広めにとる指定。通常がいいならこの１行削除。*/
+}
+
+/*h2タグ内のspanタグ（装飾文字）*/
+#book-page h2 span {
+	display: inline-block;white-space: nowrap;
+	font-size: 0.875rem;	/*文字サイズ。冒頭で指定しているフォントサイズの0.875倍です。*/
+	border-top: 3px solid #a9d1ec;	/*上の線の幅、線種、色*/
+	padding: 15px 20px 0;	/*上、左右、下への余白*/
+}
+
+/*段落タグ*/
+#book-page p {
+	padding: 0 3% 30px;	/*上、左右、下への余白*/
+}
+/*他、微調整*/
+#book-page h2 + p,
+#book-page h3 + p {
+	margin-top: -5px;
+}
+#book-page p + p {
+	margin-top: -10px;
+}
+#book-page section + section {
+	margin-top: 100px;
+}
