@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/style.css">
 <script src="js/openclose.js"></script>
 <script src="js/fixmenu_pagetop.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 
 <body>
@@ -40,7 +41,7 @@
 
     <div class="form-wrapper">
     <h1 id="form-top">サインアップ</h1>
-    <form>
+    <form id="form">
         <div class="form-item">
         <label for="name"></label>
         <input type="name" name="name" required="required" placeholder="ユーザー名"></input>
@@ -51,11 +52,11 @@
         </div>
         <div class="form-item">
         <label for="password"></label>
-        <input type="password" name="password" required="required" placeholder="パスワード"></input>
+        <input type="password" id="password" name="password" required="required" placeholder="パスワード"></input>
         </div>
         <div class="form-item">
         <label for="re:password"></label>
-        <input type="password" name="re:password" required="required" placeholder="パスワード(確認)"></input>
+        <input type="password" id="re_password" name="re:password" required="required" placeholder="パスワード(確認)"></input>
         </div>
         <div class="button-panel">
         <input type="submit" class="button" title="Sign In" value="サインアップ"></input>
@@ -88,6 +89,17 @@
 <!--メニューの開閉処理-->
 <script>
 open_close("menubar_hdr", "menubar");
+$("#form").on("submit", (e) =>{
+    const password = $("#password").val();
+    const re_password = $("#re_password").val();
+    if (password === re_password){
+        //sendtopython
+        console.log("sendtopython")
+    }
+    else{
+        alert("パスワードが一致しません")
+    }
+})
 </script>
 
 <!--lightbox用jsファイルの読み込み-->
