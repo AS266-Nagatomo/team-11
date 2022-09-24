@@ -22,7 +22,7 @@
 <div id="container">
 
 <header>
-<h1 id="logo"><a href="index.html"><img src="images/logo.png" alt="logo"></a></h1>
+<h1 id="logo"><a href="/"><img src="images/logo.png" alt="logo"></a></h1>
 </header>
 
 <!--開閉メニュー-->
@@ -81,7 +81,7 @@
 
         <div class="form-item">
             <label for="title"></label>
-            <input id="kensaku" type="search" name="searched" required="required" placeholder="作品のタイトルを入力">
+            <input id="kensaku" type="search" name="searched" required="required" placeholder="作品のタイトルを入力" autocomplete="off">
         </div>
         <div class="form-item">
           <select name="title" id="searched" placeholder="検索結果">
@@ -89,7 +89,7 @@
         </div>
         <div class="form-item">
             <label for="comment"></label>
-            <input type="text" name="reputation" required="required" placeholder="ひとことコメント">
+            <input type="text" name="reputation" required="required" placeholder="ひとことコメント" autocomplete="off">
         </div>
 
         <div class="counter">
@@ -254,15 +254,17 @@ open_close("menubar_hdr", "menubar");
 
               // Movieパネルを作成
               const movieEl = document.createElement('option')
-              var apiEl = document.createElement("input")
-              apiEl.setAttribute("type", "hidden")
-              apiEl.setAttribute("name", "api_id")
-              apiEl.setAttribute("value", id)
+              var select_tag = document.createElement("select")
+              var apiEl = document.createElement("option")
+              select_tag.setAttribute("name", "api_id")
+              select_tag.setAttribute("type", "hidden")
+              apiEl.value = id
 
               movieEl.text = title;
               movieEl.value = title;
 
-              movieEl.appendChild(apiEl);
+              select_tag.appendChild(apiEl);
+              movieEl.appendChild(select_tag);
               select.appendChild(movieEl);
           });
 
