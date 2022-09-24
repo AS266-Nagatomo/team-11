@@ -1,5 +1,5 @@
 import os
-from flask import Flask,  redirect, render_template, request, session
+from flask import Flask,  redirect, render_template, request, session, jsonify
 from flask_sqlalchemy import SQLAlchemy 
 import sqlalchemy as sa
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
@@ -107,15 +107,20 @@ def logout():
 
 @app.route("/", methods=["GET", "POST"])
 def get_index():
+    return render_template("index.html")
+
+
+@app.route("/api/ranking", methods=["GET", "POST"])
+def get_ranking():
     """books = db.session.query(Book).distinct(Book.point).limit(5).all()
     animes = db.session.query(Anime).distinct(Anime.point).limit(5).all()
     animes = db.session.query(Anime.id, sa.func.sum(Anime.point)).group_by(Anime.id).limit(5).all()
     print(animes)
     movies = db.session.query(Movie).distinct(Movie.point).limit(5).all()"""
-    animes = db.session.query(Anime.id, sa.func.sum(Anime.point)).group_by(Anime.id).limit(5).all()
+    animes = [tuple(row) for row in db.session.query(Anime.id, sa.func.sum(Anime.point)).group_by(Anime.id).limit(5)]
     print(animes)
 
-    return render_template("index.html",animes=animes)
+    return jsonify(dict(anime=animes))
 
 
 @app.route("/Mypage", methods=["GET", "POST"])
