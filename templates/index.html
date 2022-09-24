@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="css/style.css">
 <script src="js/openclose.js"></script>
 <script src="js/fixmenu_pagetop.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/tab.css">
 <link rel="stylesheet" type="text/css" href="css/scroll.css">
 <link rel="stylesheet" type="text/css" href="css/ranking.css">
@@ -79,61 +80,19 @@
 
 <div id="movie" class="area">
     <h2>映画</h2>
-    <ul class="ranking">
-        <li>
-        <img src="images/test_movie.png">
-        <p>ONE-PEACE FILM RED</p>
-        </li>
-
-        <li>
-        <img src="images/test_movie.png">
-        <p>ONE-PEACE FILM RED</p>
-        </li>
-
-        <li>
-        <img src="images/test_movie.png">
-        <p>ONE-PEACE FILM RED</p>
-        </li>
+    <ul id="movie_list" class="ranking">
     </ul>
 </div>
 
 <div id="book" class="area">
     <h2>本</h2>
-    <ul class="ranking">
-        <li>
-        <img src="images/test_book.png">
-        <p>東野圭吾 沈黙のパレード</p>
-        </li>
-
-        <li>
-        <img src="images/test_book.png">
-        <p>東野圭吾 沈黙のパレード</p>
-        </li>
-
-        <li>
-        <img src="images/test_book.png">
-        <p>東野圭吾 沈黙のパレード</p>
-        </li>
+    <ul id="book_list" class="ranking">
     </ul>
 </div>
 
 <div id="anime" class="area">
     <h2>アニメ</h2>
-    <ul class="ranking">
-        <li>
-        <img src="images/test_anime.png">
-        <p>ヴァイオレット・エヴァーガーデン</p>
-        </li>
-
-        <li>
-        <img src="images/test_anime.png">
-        <p>ヴァイオレット・エヴァーガーデン</p>
-        </li>
-
-        <li>
-        <img src="images/test_anime.png">
-        <p>ヴァイオレット・エヴァーガーデン</p>
-        </li>
+    <ul id="anime_list" class="ranking">
     </ul>
 </div>
 
@@ -176,6 +135,111 @@
 <!--メニューの開閉処理-->
 <script>
 open_close("menubar_hdr", "menubar");
+</script>
+<script>
+    async function getData(url, genre){
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (genre === "book"){
+            book_display(data);
+        }else if (genre === "movie"){
+            movie_display(data);
+        }else if (genre === "anime"){
+            anime_display(data)
+        }
+
+    }
+
+    function book_display(data){
+        console.log(data)
+        var vi = data.items[0].volumeInfo
+        var title = vi.title;
+        var img_path = vi.imageLinks ? vi.imageLinks.smallThumbnail : '';
+        var link = vi.industryIdentifiers[1].identifier;
+
+        var list = document.getElementById('book_list');
+        var li = document.createElement('li');
+        li.innerHTML = `
+            <a href="https://www.amazon.co.jp/s?i=stripbooks&rh=p_66%3A${link}", target='_blank'>
+            <img src="${img_path}">
+            <p>${title}</p>
+        `
+        list.appendChild(li);
+
+    }
+
+    function movie_display(data){
+        console.log(data)
+        var title = data.title
+        var img_path = data.poster_path
+        var link = data.id;
+        var homepage = data.homepage
+
+        var list = document.getElementById('movie_list');
+        var li = document.createElement('li');
+        li.innerHTML = `
+            <a href="https://www.themoviedb.org/movie/${link}", target='_blank'>
+            <img src="https://image.tmdb.org/t/p/w1280${img_path}">
+            <p>${title}</p>
+        `
+        list.appendChild(li);
+
+    }
+
+    function anime_display(data){
+        console.log(data)
+        var title = data.name
+        var img_path = data.poster_path
+        var link = data.id;
+        var homepage = data.homepage
+
+        var list = document.getElementById('anime_list');
+        var li = document.createElement('li');
+        li.innerHTML = `
+            <a href="https://www.themoviedb.org/tv/${link}", target='_blank'>
+            <img src="https://image.tmdb.org/t/p/w1280${img_path}">
+            <p>${title}</p>
+        `
+        list.appendChild(li);
+
+    }
+
+    $.ajax({url: '/api/ranking',
+            type: 'post'
+            }).done(function(data){
+            books = data.book;
+            console.log("books")
+            console.log(books)
+            movies = data.movie;
+            console.log("movies")
+            console.log(movies)
+            animes = data.anime;
+            console.log("animes")
+            console.log(animes)
+
+            for (book of books){
+                console.log("book")
+                console.log(book)
+                const book_api_id = book[0];
+                getData(`https://www.googleapis.com/books/v1/volumes?q=isbn:${book_api_id}`, "book")
+            }
+            for (movie of movies){
+                console.log("movie")
+                console.log(movie)
+                const movie_api_id = movie[0];
+                getData(`https://api.themoviedb.org/3/movie/${movie_api_id}?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA`, "movie")
+            }
+            for (anime of animes){
+                console.log("anime")
+                console.log(anime)
+                const anime_api_id = anime[0];
+                getData(`https://api.themoviedb.org/3/tv/${anime_api_id}?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA`, "anime")
+            }
+
+        });
+
+
 </script>
 
 <!--lightbox用jsファイルの読み込み-->
