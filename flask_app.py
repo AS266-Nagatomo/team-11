@@ -63,6 +63,8 @@ def signup():
         username= request.form.get('user-name')
         password = request.form.get('password')
         repassword = request.form.get('re:password')
+        if password != repassword:
+            return redirect("/sign-up")
         user = User.query.filter_by(username=username).first()
         if user is None :
             user = User(username=username, password=generate_password_hash(password, method='sha256'))
