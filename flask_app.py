@@ -86,7 +86,6 @@ def signup():
 @app.route('/sign-in', methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        print(request.form)
         username= request.form.get('user-name')
         password = request.form.get('password')
         user = User.query.filter_by(username=username).first()
@@ -128,10 +127,12 @@ def get_ranking():
 def get_mypage():
     if request.method == "POST":
         genre = request.form.get("genre")
-        title = request.form.get("title")
+        title_list = request.form.get("title").split("@")
+        title = title_list[0]
         reputation= request.form.get("reputation")
         point = request.form.get("point")
-        api_id = request.form.get("api_id")
+        api_id = title_list[1]
+
         anime = Anime()
         movie = Movie()
         book = Book()
