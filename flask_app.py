@@ -136,7 +136,7 @@ def get_mypage():
             movie.reputation = reputation
             movie.user_id = current_user.id
             movie.point = point
-            """movie.api_id = api_id"""
+            movie.api_id = api_id
             db.session.add(movie)
             db.session.commit()
         elif genre == "book":
@@ -144,7 +144,7 @@ def get_mypage():
             book.reputation = reputation
             book.point = point
             book.user_id = current_user.id
-            """book.api_id = api_id"""
+            book.api_id = api_id
             db.session.add(book)
             db.session.commit()
         elif genre == "anime":
@@ -152,7 +152,7 @@ def get_mypage():
             anime.reputation = reputation
             anime.point = point
             anime.user_id = current_user.id
-            """anime.api_id = api_id"""
+            anime.api_id = api_id
             db.session.add(anime)
             db.session.commit()
     else:
