@@ -12,7 +12,7 @@
 }
 /*liにactiveクラスがついた時の形状*/
 .tab li.active a{
-	background:#fff;
+	background:#cbe6ed;
 }
 
 
@@ -21,7 +21,8 @@
 	display: none;/*はじめは非表示*/
 	opacity: 0;/*透過0*/
 	background: #fff;
-	padding:50px 20px;
+	padding: 50px 20px;
+	/*border: 5px ridge #a9d1ec;*/
 }
 
 /*areaにis-activeというクラスがついた時の形状*/
@@ -39,4 +40,16 @@
 	to {
 		opacity: 1;
 	}
+}
+
+.area{
+    padding: 0.5em 1em;
+    margin: 2em 0;
+    background: #f4f4f4;
+    border-top: solid 5px #cbe6ed;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
+}
+.area p {
+    margin: 0;
+    padding: 0;
 }

@@ -1,6 +1,7 @@
 import os
 from flask import Flask,  redirect, render_template, request, session
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy 
+import sqlalchemy as sa
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -106,10 +107,15 @@ def logout():
 
 @app.route("/", methods=["GET", "POST"])
 def get_index():
-    books = db.session.query(Book).distinct(Book.point).limit(5).all()
+    """books = db.session.query(Book).distinct(Book.point).limit(5).all()
     animes = db.session.query(Anime).distinct(Anime.point).limit(5).all()
-    movies = db.session.query(Movie).distinct(Movie.point).limit(5).all()
-    return render_template("index.html", books=books, animes=animes, movies=movies)
+    animes = db.session.query(Anime.id, sa.func.sum(Anime.point)).group_by(Anime.id).limit(5).all()
+    print(animes)
+    movies = db.session.query(Movie).distinct(Movie.point).limit(5).all()"""
+    animes = db.session.query(Anime.id, sa.func.sum(Anime.point)).group_by(Anime.id).limit(5).all()
+    print(animes)
+
+    return render_template("index.html",animes=animes)
 
 
 @app.route("/Mypage", methods=["GET", "POST"])
@@ -130,7 +136,7 @@ def get_mypage():
             movie.reputation = reputation
             movie.user_id = current_user.id
             movie.point = point
-            movie.api_id = api_id
+            """movie.api_id = api_id"""
             db.session.add(movie)
             db.session.commit()
         elif genre == "book":
@@ -138,7 +144,7 @@ def get_mypage():
             book.reputation = reputation
             book.point = point
             book.user_id = current_user.id
-            book.api_id = api_id
+            """book.api_id = api_id"""
             db.session.add(book)
             db.session.commit()
         elif genre == "anime":
@@ -146,7 +152,7 @@ def get_mypage():
             anime.reputation = reputation
             anime.point = point
             anime.user_id = current_user.id
-            anime.api_id = api_id
+            """anime.api_id = api_id"""
             db.session.add(anime)
             db.session.commit()
     else:
