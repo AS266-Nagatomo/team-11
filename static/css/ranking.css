@@ -1,7 +1,10 @@
 .ranking {
-    counter-reset: rank;
-    /*text-align: center;*/
-  }
+  counter-reset: rank;
+  display: flex ;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
   .ranking li {
     position: relative;
