@@ -92,7 +92,7 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user is not None and  check_password_hash(user.password, password):
             login_user(user)
-            return redirect('/')
+            return redirect('/Mypage')
         return redirect('/sign-up')
     else:
         return render_template('/sign-in.html')
@@ -117,10 +117,9 @@ def get_ranking():
     animes = db.session.query(Anime.id, sa.func.sum(Anime.point)).group_by(Anime.id).limit(5).all()
     print(animes)
     movies = db.session.query(Movie).distinct(Movie.point).limit(5).all()"""
-    books = [tuple(row) for row in db.session.query(Book.id, sa.func.sum(Book.point)).group_by(Book.id).limit(5)]
-    animes = [tuple(row) for row in db.session.query(Anime.id, sa.func.sum(Anime.point)).group_by(Anime.id).limit(5)]
-    movies = [tuple(row) for row in db.session.query(Movie.id, sa.func.sum(Movie.point)).group_by(Movie.id).limit(5)]
-
+    books = [tuple(row) for row in db.session.query(Book.api_id, sa.func.sum(Book.point)).group_by(Book.id).limit(5)]
+    animes = [tuple(row) for row in db.session.query(Anime.api_id, sa.func.sum(Anime.point)).group_by(Anime.id).limit(5)]
+    movies = [tuple(row) for row in db.session.query(Movie.api_id, sa.func.sum(Movie.point)).group_by(Movie.id).limit(5)]
     return jsonify(dict(anime=animes, book=books, movie=movies))
 
 
