@@ -168,43 +168,29 @@ open_close("menubar_hdr", "menubar");
           while (select.lastChild){
               select.removeChild(select.lastChild);
           }
+          //var api_id = document.getElementById("api_id");
 
           books.forEach((book) => {
               //オブジェクトから各変数に格納
               const vi = book.volumeInfo;
               const title = vi.title;
-              const link = vi.infoLink;
-              const image = vi.imageLinks ? vi.imageLinks.smallThumbnail : '';
-              const description = vi.description;
+              const isbn = vi.industryIdentifiers[1].identifier;
 
               //bookパネルを作成
               const bookEl = document.createElement("option")
+              var apiEl = document.createElement("input")
+              apiEl.setAttribute("type", "hidden")
+              apiEl.setAttribute("name", "api_id")
+              apiEl.setAttribute("value", isbn)
+
               bookEl.text = title;
               bookEl.value = title;
 
+              bookEl.appendChild(apiEl);
               select.appendChild(bookEl);
-
-              /*
-              bookEl.classList.add("data")
-
-              //bookパネルをHTMLに埋め込む
-              bookEl.innerHTML = `
-                  <a href='${link}', target='_blank'>
-                  <img src='${image}' alt="${title}">
-                  <div class='info'>
-                      <h3>${title}</h3>
-                  </div>
-                  <div class="description">
-                      <h3>概要</h3>
-                      ${description}
-                  </div>
-              `
-
-              main.appendChild(bookEl);*/
           });
 
-
-      }
+        }
 
       //アニメの情報をHTMLに追加
       function create_animes(animes){
@@ -228,9 +214,6 @@ open_close("menubar_hdr", "menubar");
               // オブジェクトから各変数に格納
               const {
               name,
-              poster_path,
-              vote_average,
-              overview,
               id
               } = anime
 
@@ -241,25 +224,17 @@ open_close("menubar_hdr", "menubar");
 
               // Animeパネルを作成
               const animeEl = document.createElement('option')
+              var apiEl = document.createElement("input")
+              apiEl.setAttribute("type", "hidden")
+              apiEl.setAttribute("name", "api_id")
+              apiEl.setAttribute("value", id)
+
               animeEl.text = name;
               animeEl.value = name;
 
+              animeEl.appendChild(apiEl);
               select.appendChild(animeEl);
 
-              /*
-              // AnimeパネルをHTMLに埋め込む
-              animeEl.innerHTML =  `
-              <a href='https://www.themoviedb.org/tv/${id}?language=ja', target='_blank'>
-                  <img src="${IMG_URL + poster_path}" alt="${name}">
-                  <div class="info">
-                      <h3>${name}</h3>
-                  </div>
-                  <div class="description">
-                      <h3>概要</h3>
-                      ${overview}
-                  </div>
-              `
-              main.appendChild(animeEl)*/
           });
       }
 
@@ -274,34 +249,21 @@ open_close("menubar_hdr", "menubar");
               // オブジェクトから各変数に格納
               const {
               title,
-              poster_path,
-              vote_average,
-              overview,
               id
               } = movie
 
               // Movieパネルを作成
               const movieEl = document.createElement('option')
+              var apiEl = document.createElement("input")
+              apiEl.setAttribute("type", "hidden")
+              apiEl.setAttribute("name", "api_id")
+              apiEl.setAttribute("value", id)
+
               movieEl.text = title;
               movieEl.value = title;
 
+              movieEl.appendChild(apiEl);
               select.appendChild(movieEl);
-
-              /*
-              movieEl.classList.add('data')
-              // MoveパネルをHTMLに埋め込む
-              movieEl.innerHTML =  `
-                  <a href='https://www.themoviedb.org/movie/${id}?language=ja', target='_blank'>
-                  <img src="${IMG_URL + poster_path}" alt="${title}">
-                  <div class="info">
-                      <h3>${title}</h3>
-                  </div>
-                  <div class="description">
-                      <h3>概要</h3>
-                      ${overview}
-                  </div>
-              `
-              main.appendChild(movieEl)*/
           });
 
       }
@@ -320,28 +282,6 @@ open_close("menubar_hdr", "menubar");
 
       }
 
-      /*
-      //書籍が検索された時にapiを起動させる
-      $("#books").on("input", function(){
-          var searchText = $(this).val();
-          let books_api = 'https://www.googleapis.com/books/v1/volumes?q="';
-          searchWord(books_api, searchText, "books")
-      });
-
-      //アニメが検索された時にapiを起動させる
-      $("#animes").on("input", function(){
-          var searchText = $(this).val();
-          const animes_api = 'https://api.themoviedb.org/3/search/tv?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA&query="';
-          searchWord(animes_api, searchText, "animes")
-      });
-
-      //映画が検索された時にapiを起動させる
-      $("#movies").on("input", function(){
-          var searchText = $(this).val();
-          let movies_api = 'https://api.themoviedb.org/3/search/movie?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA&query="';
-          searchWord(movies_api, searchText, "movies")
-      });
-      */
 
       //検索された時にapiを起動させる
       $("#kensaku").on("input", function(){
@@ -366,15 +306,6 @@ open_close("menubar_hdr", "menubar");
           }
 
       });
-
-
-      /*
-      //エンターが押された時に画面をリロードしないようにする
-      const form = document.getElementById("form");
-
-      form.addEventListener("submit", (e) => {
-          e.preventDefault()
-      });*/
 
   });
 
