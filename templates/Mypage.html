@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="css/style.css">
 <script src="js/openclose.js"></script>
 <script src="js/fixmenu_pagetop.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/select.css">
 <link rel="stylesheet" type="text/css" href="css/counter.css">
 
@@ -77,9 +78,14 @@
               <option value="anime">アニメ</option>
             </select>
         </div>
+
         <div class="form-item">
             <label for="title"></label>
-            <input type="search" name="title" required="required" placeholder="作品のタイトル">
+            <input id="kensaku" type="search" name="searched" required="required" placeholder="作品のタイトルを入力">
+        </div>
+        <div class="form-item">
+          <select name="title" id="searched" placeholder="検索結果">
+          </select>
         </div>
         <div class="form-item">
             <label for="comment"></label>
@@ -132,6 +138,247 @@ open_close("menubar_hdr", "menubar");
 
 <!--カウンター用JS-->
 <script src="js/counter.js"></script>
+
+<script>
+  $(function() {
+      //定数
+      const IMG_URL = 'https://image.tmdb.org/t/p/w1280';
+      const main = document.getElementById("main")
+
+      //apiをfetchで起動
+      async function getData(url, genre){
+          const res = await fetch(url);
+          const data = await res.json()
+
+          if (genre == "book"){
+              create_books(data.items)
+          }
+          else if (genre == "anime"){
+              create_animes(data.results)
+          }
+          else{
+              create_movies(data.results)
+          }
+
+      }
+
+      //書籍の情報をHTMLに追加
+      function create_books(books){
+          var select = document.getElementById("searched");
+          while (select.lastChild){
+              select.removeChild(select.lastChild);
+          }
+
+          books.forEach((book) => {
+              //オブジェクトから各変数に格納
+              const vi = book.volumeInfo;
+              const title = vi.title;
+              const link = vi.infoLink;
+              const image = vi.imageLinks ? vi.imageLinks.smallThumbnail : '';
+              const description = vi.description;
+
+              //bookパネルを作成
+              const bookEl = document.createElement("option")
+              bookEl.text = title;
+              bookEl.value = title;
+
+              select.appendChild(bookEl);
+
+              /*
+              bookEl.classList.add("data")
+
+              //bookパネルをHTMLに埋め込む
+              bookEl.innerHTML = `
+                  <a href='${link}', target='_blank'>
+                  <img src='${image}' alt="${title}">
+                  <div class='info'>
+                      <h3>${title}</h3>
+                  </div>
+                  <div class="description">
+                      <h3>概要</h3>
+                      ${description}
+                  </div>
+              `
+
+              main.appendChild(bookEl);*/
+          });
+
+
+      }
+
+      //アニメの情報をHTMLに追加
+      function create_animes(animes){
+
+          //TVドラマからジャンルがアニメのものかを判断
+          function isAnime(anime){
+              var genres = anime.genre_ids
+              for(var i = 0; i < genres.length; i++){
+                  if (genres[i] === 16){
+                      return true
+                  }
+              }
+              return false
+          }
+          var select = document.getElementById("searched");
+          while (select.lastChild){
+              select.removeChild(select.lastChild);
+          }
+
+          animes.forEach((anime) => {
+              // オブジェクトから各変数に格納
+              const {
+              name,
+              poster_path,
+              vote_average,
+              overview,
+              id
+              } = anime
+
+              var isanime = isAnime(anime)
+
+              if (!isanime){ return; }
+
+
+              // Animeパネルを作成
+              const animeEl = document.createElement('option')
+              animeEl.text = name;
+              animeEl.value = name;
+
+              select.appendChild(animeEl);
+
+              /*
+              // AnimeパネルをHTMLに埋め込む
+              animeEl.innerHTML =  `
+              <a href='https://www.themoviedb.org/tv/${id}?language=ja', target='_blank'>
+                  <img src="${IMG_URL + poster_path}" alt="${name}">
+                  <div class="info">
+                      <h3>${name}</h3>
+                  </div>
+                  <div class="description">
+                      <h3>概要</h3>
+                      ${overview}
+                  </div>
+              `
+              main.appendChild(animeEl)*/
+          });
+      }
+
+      //映画の情報をHTMLに追加
+      function create_movies(movies){
+          var select = document.getElementById("searched");
+          while (select.lastChild){
+              select.removeChild(select.lastChild);
+          }
+
+          movies.forEach((movie) => {
+              // オブジェクトから各変数に格納
+              const {
+              title,
+              poster_path,
+              vote_average,
+              overview,
+              id
+              } = movie
+
+              // Movieパネルを作成
+              const movieEl = document.createElement('option')
+              movieEl.text = title;
+              movieEl.value = title;
+
+              select.appendChild(movieEl);
+
+              /*
+              movieEl.classList.add('data')
+              // MoveパネルをHTMLに埋め込む
+              movieEl.innerHTML =  `
+                  <a href='https://www.themoviedb.org/movie/${id}?language=ja', target='_blank'>
+                  <img src="${IMG_URL + poster_path}" alt="${title}">
+                  <div class="info">
+                      <h3>${title}</h3>
+                  </div>
+                  <div class="description">
+                      <h3>概要</h3>
+                      ${overview}
+                  </div>
+              `
+              main.appendChild(movieEl)*/
+          });
+
+      }
+
+      //apiと検索ワードを連携
+      function searchWord(url, searchText, genre){
+
+          $("#main").empty();
+
+          if (searchText != ""){
+              url += searchText;
+
+              getData(url, genre);
+              searchText = "";
+          }
+
+      }
+
+      /*
+      //書籍が検索された時にapiを起動させる
+      $("#books").on("input", function(){
+          var searchText = $(this).val();
+          let books_api = 'https://www.googleapis.com/books/v1/volumes?q="';
+          searchWord(books_api, searchText, "books")
+      });
+
+      //アニメが検索された時にapiを起動させる
+      $("#animes").on("input", function(){
+          var searchText = $(this).val();
+          const animes_api = 'https://api.themoviedb.org/3/search/tv?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA&query="';
+          searchWord(animes_api, searchText, "animes")
+      });
+
+      //映画が検索された時にapiを起動させる
+      $("#movies").on("input", function(){
+          var searchText = $(this).val();
+          let movies_api = 'https://api.themoviedb.org/3/search/movie?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA&query="';
+          searchWord(movies_api, searchText, "movies")
+      });
+      */
+
+      //検索された時にapiを起動させる
+      $("#kensaku").on("input", function(){
+          var genre = $("#sources").val();
+          console.log(genre)
+          var searchText = $(this).val();
+
+          if (genre === "movie"){
+              let movies_api = 'https://api.themoviedb.org/3/search/movie?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA&query="';
+              searchWord(movies_api, searchText, genre)
+
+          }else if (genre === "book"){
+              let books_api = 'https://www.googleapis.com/books/v1/volumes?q="';
+              searchWord(books_api, searchText, genre)
+
+          }else if (genre === "anime"){
+              let animes_api = 'https://api.themoviedb.org/3/search/tv?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA&query="';
+              searchWord(animes_api, searchText, genre)
+
+          }else{
+              alert("ジャンルを選択してください")
+          }
+
+      });
+
+
+      /*
+      //エンターが押された時に画面をリロードしないようにする
+      const form = document.getElementById("form");
+
+      form.addEventListener("submit", (e) => {
+          e.preventDefault()
+      });*/
+
+  });
+
+</script>
 
 </body>
 </html>
