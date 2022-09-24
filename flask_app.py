@@ -26,7 +26,7 @@ class Anime(db.Model):
     __tablename__ = 'anime'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30),)
-    reputation = db.Column(db.String(50), unique=True)
+    reputation = db.Column(db.String(50))
     point = db.Column(db.Integer)
     user_id = db.Column(db.Integer)
     api_id = db.Column(db.Integer)
@@ -35,7 +35,7 @@ class Book(db.Model):
     __tablename__ = 'book'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30),)
-    reputation = db.Column(db.String(50), unique=True)
+    reputation = db.Column(db.String(50))
     point = db.Column(db.Integer)
     user_id = db.Column(db.Integer)
     api_id = db.Column(db.Integer)
@@ -44,7 +44,7 @@ class Movie(db.Model):
     __tablename__ = 'movie'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30),)
-    reputation = db.Column(db.String(50), unique=True)
+    reputation = db.Column(db.String(50))
     point = db.Column(db.Integer)
     user_id = db.Column(db.Integer)
     api_id = db.Column(db.Integer)
