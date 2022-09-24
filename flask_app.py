@@ -106,6 +106,9 @@ def logout():
 
 @app.route("/", methods=["GET", "POST"])
 def get_index():
+    books = db.session.query(Book).distinct(Book.point).limit(5).all()
+    aniems = db.session.query(Anime).distinct(Anime.point).limit(5).all()
+    movies = db.session.query(Movie).distinct(Movie.point).limit(5).all()
     return render_template("index.html")
 
 
