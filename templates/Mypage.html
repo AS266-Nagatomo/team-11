@@ -81,7 +81,7 @@
 
         <div class="form-item">
             <label for="title"></label>
-            <input id="kensaku" type="search" name="searched" required="required" placeholder="作品のタイトルを入力" autocomplete="off">
+            <input id="kensaku" type="search" name="searched" required="required" placeholder="作品のタイトルを検索" autocomplete="off">
         </div>
         <div class="form-item">
           <select name="title" id="searched" placeholder="検索結果">
@@ -178,15 +178,10 @@ open_close("menubar_hdr", "menubar");
 
               //bookパネルを作成
               const bookEl = document.createElement("option")
-              var apiEl = document.createElement("input")
-              apiEl.setAttribute("type", "hidden")
-              apiEl.setAttribute("name", "api_id")
-              apiEl.setAttribute("value", isbn)
 
               bookEl.text = title;
-              bookEl.value = title;
+              bookEl.value = title + "@" + isbn;
 
-              bookEl.appendChild(apiEl);
               select.appendChild(bookEl);
           });
 
@@ -224,15 +219,10 @@ open_close("menubar_hdr", "menubar");
 
               // Animeパネルを作成
               const animeEl = document.createElement('option')
-              var apiEl = document.createElement("input")
-              apiEl.setAttribute("type", "hidden")
-              apiEl.setAttribute("name", "api_id")
-              apiEl.setAttribute("value", id)
 
               animeEl.text = name;
-              animeEl.value = name;
+              animeEl.value = name + "@" + id;
 
-              animeEl.appendChild(apiEl);
               select.appendChild(animeEl);
 
           });
@@ -254,17 +244,10 @@ open_close("menubar_hdr", "menubar");
 
               // Movieパネルを作成
               const movieEl = document.createElement('option')
-              var select_tag = document.createElement("select")
-              var apiEl = document.createElement("option")
-              select_tag.setAttribute("name", "api_id")
-              select_tag.setAttribute("type", "hidden")
-              apiEl.value = id
 
               movieEl.text = title;
-              movieEl.value = title;
+              movieEl.value = title + "@" + id;
 
-              select_tag.appendChild(apiEl);
-              movieEl.appendChild(select_tag);
               select.appendChild(movieEl);
           });
 
