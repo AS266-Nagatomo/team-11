@@ -1,6 +1,7 @@
 import os
-from flask import Flask,  redirect, render_template, request, session
+from flask import Flask,  redirect, render_template, request, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
+import sqlalchemy as sa
 from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -28,6 +29,7 @@ class Anime(db.Model):
     reputation = db.Column(db.String(50), unique=True)
     point = db.Column(db.Integer)
     user_id = db.Column(db.Integer)
+    api_id = db.Column(db.Integer)
 
 class Book(db.Model):
     __tablename__ = 'book'
@@ -36,6 +38,7 @@ class Book(db.Model):
     reputation = db.Column(db.String(50), unique=True)
     point = db.Column(db.Integer)
     user_id = db.Column(db.Integer)
+    api_id = db.Column(db.Integer)
 
 class Movie(db.Model):
     __tablename__ = 'movie'
@@ -44,6 +47,7 @@ class Movie(db.Model):
     reputation = db.Column(db.String(50), unique=True)
     point = db.Column(db.Integer)
     user_id = db.Column(db.Integer)
+    api_id = db.Column(db.Integer)
 
 
 
@@ -66,6 +70,9 @@ def signup():
         if password != repassword:
             return redirect("/sign-up")
         user = User.query.filter_by(username=username).first()
+
+        if password != repassword:
+            return redirect('/sign-up')
         if user is None :
             user = User(username=username, password=generate_password_hash(password, method='sha256'))
             db.session.add(user)
@@ -103,6 +110,20 @@ def get_index():
     return render_template("index.html")
 
 
+@app.route("/api/ranking", methods=["GET", "POST"])
+def get_ranking():
+    """books = db.session.query(Book).distinct(Book.point).limit(5).all()
+    animes = db.session.query(Anime).distinct(Anime.point).limit(5).all()
+    animes = db.session.query(Anime.id, sa.func.sum(Anime.point)).group_by(Anime.id).limit(5).all()
+    print(animes)
+    movies = db.session.query(Movie).distinct(Movie.point).limit(5).all()"""
+    books = [tuple(row) for row in db.session.query(Book.id, sa.func.sum(Book.point)).group_by(Book.id).limit(5)]
+    animes = [tuple(row) for row in db.session.query(Anime.id, sa.func.sum(Anime.point)).group_by(Anime.id).limit(5)]
+    movies = [tuple(row) for row in db.session.query(Movie.id, sa.func.sum(Movie.point)).group_by(Movie.id).limit(5)]
+
+    return jsonify(dict(anime=animes, book=books, movie=movies))
+
+
 @app.route("/Mypage", methods=["GET", "POST"])
 @login_required
 def get_mypage():
@@ -111,6 +132,7 @@ def get_mypage():
         title = request.form.get("title")
         reputation= request.form.get("reputation")
         point = request.form.get("point")
+        api_id = request.form.get("api_id")
         anime = Anime()
         movie = Movie()
         book = Book()
@@ -120,6 +142,7 @@ def get_mypage():
             movie.reputation = reputation
             movie.user_id = current_user.id
             movie.point = point
+            movie.api_id = api_id
             db.session.add(movie)
             db.session.commit()
         elif genre == "book":
@@ -127,6 +150,7 @@ def get_mypage():
             book.reputation = reputation
             book.point = point
             book.user_id = current_user.id
+            book.api_id = api_id
             db.session.add(book)
             db.session.commit()
         elif genre == "anime":
@@ -134,6 +158,7 @@ def get_mypage():
             anime.reputation = reputation
             anime.point = point
             anime.user_id = current_user.id
+            anime.api_id = api_id
             db.session.add(anime)
             db.session.commit()
     else:
