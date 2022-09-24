@@ -64,6 +64,9 @@ def signup():
         password = request.form.get('password')
         repassword = request.form.get('re:password')
         user = User.query.filter_by(username=username).first()
+
+        if password != repassword:
+            return redirect('/sign-up')
         if user is None :
             user = User(username=username, password=generate_password_hash(password, method='sha256'))
             db.session.add(user)
@@ -97,7 +100,6 @@ def logout():
 
 
 @app.route("/", methods=["GET", "POST"])
-@login_required
 def get_index():
     return render_template("index.html")
 
