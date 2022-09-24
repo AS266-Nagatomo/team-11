@@ -28,6 +28,7 @@ class Anime(db.Model):
     reputation = db.Column(db.String(50), unique=True)
     point = db.Column(db.Integer)
     user_id = db.Column(db.Integer)
+    api_id = db.Column(db.Integer)
 
 class Book(db.Model):
     __tablename__ = 'book'
@@ -36,6 +37,7 @@ class Book(db.Model):
     reputation = db.Column(db.String(50), unique=True)
     point = db.Column(db.Integer)
     user_id = db.Column(db.Integer)
+    api_id = db.Column(db.Integer)
 
 class Movie(db.Model):
     __tablename__ = 'movie'
@@ -44,6 +46,7 @@ class Movie(db.Model):
     reputation = db.Column(db.String(50), unique=True)
     point = db.Column(db.Integer)
     user_id = db.Column(db.Integer)
+    api_id = db.Column(db.Integer)
 
 
 
@@ -114,6 +117,7 @@ def get_mypage():
         title = request.form.get("title")
         reputation= request.form.get("reputation")
         point = request.form.get("point")
+        api_id = request.form.get("api_id")
         anime = Anime()
         movie = Movie()
         book = Book()
@@ -123,6 +127,7 @@ def get_mypage():
             movie.reputation = reputation
             movie.user_id = current_user.id
             movie.point = point
+            movie.api_id = api_id
             db.session.add(movie)
             db.session.commit()
         elif genre == "book":
@@ -130,6 +135,7 @@ def get_mypage():
             book.reputation = reputation
             book.point = point
             book.user_id = current_user.id
+            book.api_id = api_id
             db.session.add(book)
             db.session.commit()
         elif genre == "anime":
@@ -137,6 +143,7 @@ def get_mypage():
             anime.reputation = reputation
             anime.point = point
             anime.user_id = current_user.id
+            anime.api_id = api_id
             db.session.add(anime)
             db.session.commit()
     else:
