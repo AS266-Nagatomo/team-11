@@ -99,7 +99,6 @@ def logout():
 
 
 @app.route("/", methods=["GET", "POST"])
-@login_required
 def get_index():
     return render_template("index.html")
 
