@@ -141,14 +141,7 @@ open_close("menubar_hdr", "menubar");
         const res = await fetch(url);
         const data = await res.json();
 
-        if (genre === "book"){
-            book_display(data);
-        }else if (genre === "movie"){
-            movie_display(data);
-        }else if (genre === "anime"){
-            anime_display(data)
-        }
-
+        return data
     }
 
     function book_display(data){
@@ -208,34 +201,48 @@ open_close("menubar_hdr", "menubar");
     $.ajax({url: '/api/ranking',
             type: 'post'
             }).done(function(data){
-            books = data.book;
-            console.log("books")
-            console.log(books)
-            movies = data.movie;
-            console.log("movies")
-            console.log(movies)
-            animes = data.anime;
-            console.log("animes")
-            console.log(animes)
 
+            books = data.book;
+            book_ids = [];
             for (book of books){
-                console.log("book")
-                console.log(book)
-                const book_api_id = book[0];
-                getData(`https://www.googleapis.com/books/v1/volumes?q=isbn:${book_api_id}`, "book")
+                book_ids.push(book[0]);
             }
+
+            movies = data.movie;
+            movie_ids = [];
             for (movie of movies){
-                console.log("movie")
-                console.log(movie)
-                const movie_api_id = movie[0];
-                getData(`https://api.themoviedb.org/3/movie/${movie_api_id}?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA`, "movie")
+                movie_ids.push(movie[0]);
             }
+
+            animes = data.anime;
+            anime_ids = [];
             for (anime of animes){
-                console.log("anime")
-                console.log(anime)
-                const anime_api_id = anime[0];
-                getData(`https://api.themoviedb.org/3/tv/${anime_api_id}?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA`, "anime")
+                anime_ids.push(anime[0]);
             }
+
+            Promise.all(book_ids.map(api_id => getData(`https://www.googleapis.com/books/v1/volumes?q=isbn:${api_id}`, "book"))
+
+            ).then((datas) =>{
+                for (data of datas){
+                    book_display(data);
+                }
+            })
+
+            Promise.all(movie_ids.map(api_id => getData(`https://api.themoviedb.org/3/movie/${api_id}?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA`, "movie"))
+
+            ).then((datas) =>{
+                for (data of datas){
+                    movie_display(data);
+                }
+            })
+
+            Promise.all(anime_ids.map(api_id => getData(`https://api.themoviedb.org/3/tv/${api_id}?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA`, "anime"))
+
+            ).then((datas) =>{
+                for (data of datas){
+                    anime_display(data);
+                }
+            })
 
         });
 
