@@ -137,7 +137,7 @@
 open_close("menubar_hdr", "menubar");
 </script>
 <script>
-    async function getData(url, genre){
+    async function getData(url){
         const res = await fetch(url);
         const data = await res.json();
 
@@ -220,29 +220,29 @@ open_close("menubar_hdr", "menubar");
                 anime_ids.push(anime[0]);
             }
 
-            Promise.all(book_ids.map(api_id => getData(`https://www.googleapis.com/books/v1/volumes?q=isbn:${api_id}`, "book"))
+            Promise.all(book_ids.map(api_id => getData(`https://www.googleapis.com/books/v1/volumes?q=isbn:${api_id}`))
 
             ).then((datas) =>{
                 for (data of datas){
                     book_display(data);
                 }
-            })
+            });
 
-            Promise.all(movie_ids.map(api_id => getData(`https://api.themoviedb.org/3/movie/${api_id}?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA`, "movie"))
+            Promise.all(movie_ids.map(api_id => getData(`https://api.themoviedb.org/3/movie/${api_id}?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA`))
 
             ).then((datas) =>{
                 for (data of datas){
                     movie_display(data);
                 }
-            })
+            });
 
-            Promise.all(anime_ids.map(api_id => getData(`https://api.themoviedb.org/3/tv/${api_id}?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA`, "anime"))
+            Promise.all(anime_ids.map(api_id => getData(`https://api.themoviedb.org/3/tv/${api_id}?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA`))
 
             ).then((datas) =>{
                 for (data of datas){
                     anime_display(data);
                 }
-            })
+            });
 
         });
 
