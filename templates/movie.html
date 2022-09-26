@@ -76,99 +76,47 @@
 </div>
 </section>
 
-<div class="form-item">
-    <select name="genre" id="sources" class="custom-select sources" placeholder="並べ替え">
-    <option value="movie">点数降順</option>
-    <option value="book">点数昇順</option>
-    <option value="anime">50音順</option>
-    </select>
-</div>
+<form action="/Movie" method="post">
+    <div class="form-item">
+        <select name="genre" class="custom-select sources" placeholder="並べ替え"  onchange="this.form.submit()">
+        <option value="descend">点数降順</option>
+        <option value="acsend">点数昇順</option>
+        <option value="alpha">50音順</option>
+        </select>
+    </div>
+</form>
 
 <section>
     <div>
         <div class="acc-container">
-            <!--ここから-->
+            {% for movie in movies %}
             <div class="acc-btn">
                 <div class="acc_title">
-                    <div class="title">ONEPIECE FILM RED</div>
-                    100pt
+                    <div class="title">{{movie.title}}</div>
+                    {{movie.point}} pt
                 </div>
             </div>
             <div class="acc-content">
                 <div class="acc_text">
-                    おもろすぎ
+                    {{movie.reputation}}
                     <div class="row">
                         <div class="delete-confirm small">
-                            <button class="delete">
-                                <i class="fa fa-trash-o fa-lg"></i>
-                            </button>
-                            <button class="yes">
-                                <i class="fa fa-check"></i>
-                            </button>
-                            <button class="no">
-                                <i class="fa fa-close"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--ここまでが１リスト-->
-
-            <!--ここから-->
-            <div class="acc-btn">
-                <div class="acc_title">
-                    <div class="title">沈黙のパレード</div>
-                    80pt
-                </div>
-            </div>
-            <div class="acc-content">
-                <div class="acc_text">
-                    いいね
-                    <div class="row">
-                        <div class="delete-confirm small">
-                            <button class="delete">
-                                <i class="fa fa-trash-o fa-lg"></i>
-                            </button>
-                            <button class="yes">
-                                <i class="fa fa-check"><a href="#"></a></i>
-                            </button>
-                            <button class="no">
-                                <i class="fa fa-close"><a href="#"></a></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--ここまでが１リスト-->
-
-            <!--
-            {% for book in books %}
-            <div class="acc-btn">
-                <div class="acc_title">
-                    <div class="title">{{book.title}}</div>
-                    {{book.point}} pt
-                </div>
-            </div>
-            <div class="acc-content">
-                <div class="acc_text">
-                    {{book.reputation}}
-                    <div class="row">
-                        <div class="delete-confirm small">
-                            <button class="delete">
-                                <i class="fa fa-trash-o fa-lg"></i>
-                            </button>
-                            <button class="yes">
-                                <i class="fa fa-check"></i>
-                            </button>
-                            <button class="no">
-                                <i class="fa fa-close"></i>
-                            </button>
+                            <form action="/Movie"method="post">
+                                <button type="button"class="delete">
+                                    <i class="fa fa-trash-o fa-lg"></i>
+                                </button>
+                                <button type="submit" name="target" value="{{movie.id}}" class="yes">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                                <button type="button" class="no">
+                                    <i class="fa fa-close"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
             {% endfor %}
-            -->
 
         </div>
     </div>
