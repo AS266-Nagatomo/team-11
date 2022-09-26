@@ -103,15 +103,17 @@
                     {{anime.reputation}}
                     <div class="row">
                         <div class="delete-confirm small">
-                            <button class="delete">
-                                <i class="fa fa-trash-o fa-lg"></i>
-                            </button>
-                            <button class="yes" method="post" value="delete">
-                                <i class="fa fa-check"></i>
-                            </button>
-                            <button class="no">
-                                <i class="fa fa-close"></i>
-                            </button>
+                            <form method="post">
+                                <button class="delete">
+                                    <i class="fa fa-trash-o fa-lg"></i>
+                                </button>
+                                <button type="submit" name="target" value="{{anime.id}}" class="yes">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                                <button class="no">
+                                    <i class="fa fa-close"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

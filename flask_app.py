@@ -201,8 +201,9 @@ def get_animes():
             animes = db.session.query(Anime).filter(Anime.user_id==current_user.id).order_by(Anime.title).all()
             return render_template("Anime.html", animes=animes)
 
-        delete= request.form.get("delete")
-        db.session.query(Anime).filter(Anime.user_id==current_user.id, Anime.title==title).delete()
+        id= request.form.get("target")
+        db.session.query(Anime).filter(Anime.user_id==current_user.id, Anime.id==id).delete()
+        db.session.commit()
     return redirect("/Anime")
 
 
