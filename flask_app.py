@@ -165,10 +165,18 @@ def get_mypage():
 @app.route("/Book", methods=["GET", "POST"])
 @login_required
 def get_books():
-    books = db.session.query(Book).filter(Book.user_id==current_user.id).all()
     if request.method == "GET":
+        books = db.session.query(Book).filter(Book.user_id==current_user.id).all()
         return render_template("Book.html", books=books)
-    return render_template("Book.html")
+    else:
+        genre = request.form.get("genre")
+        if genre == "descend":
+            books = db.session.query(Book).filter(Book.user_id==current_user.id).order_by(Book.point.desc()).all()
+        elif genre == "ascend":
+            books = db.session.query(Book).filter(Book.user_id==current_user.id).order_by(Book.point).all()
+        elif genre == "alpha":
+            books = db.session.query(Book).filter(Book.user_id==current_user.id).order_by(Book.title).all()
+    return render_template("Book.html", books=books)
 
 
 @app.route("/Anime", methods=["GET", "POST"])

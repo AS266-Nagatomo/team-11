@@ -76,13 +76,24 @@
 </div>
 </section>
 
-<div class="form-item">
-    <select name="genre" id="sources" class="custom-select sources" placeholder="並べ替え">
-    <option value="movie">点数降順</option>
-    <option value="book">点数昇順</option>
-    <option value="anime">50音順</option>
-    </select>
-</div>
+<form id="submit_form" method="POST">
+    <div class="form-item">
+        <select name="genre" id="sources" class="custom-select sources" placeholder="並べ替え" id="submit_select">
+        <option value="descend">点数降順</option>
+        <option value="acsend">点数昇順</option>
+        <option value="alpha">50音順</option>
+        </select>
+    </div>
+</form>
+
+<script type="text/javascript">
+    $(function(){
+      $("#submit_select").change(function(){
+        $("#submit_form").submit();
+      });
+    });
+</script>
+
 
 <section>
     <div>
@@ -141,7 +152,6 @@
             </div>
             <!--ここまでが１リスト-->
 
-            <!--
             {% for book in books %}
             <div class="acc-btn">
                 <div class="acc_title">
@@ -168,7 +178,6 @@
                 </div>
             </div>
             {% endfor %}
-            -->
 
         </div>
     </div>
@@ -204,6 +213,20 @@ open_close("menubar_hdr", "menubar");
 <!--デリートボタン用JS-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="js/delete_button.js"></script>
+
+<script type="text/javascript" src="./scripts/jquery.select-submit-change.js"></script>
+<script type="text/javascript">
+$(function() {
+  $("[id^=submit_select]").SelectSubmitChange();
+});
+$(function($) {
+  $.fn.SelectSubmitChange = function(){
+    $(this).change(function(){
+      $("#submit_form"+$(this).attr("id").slice(-1)).submit();
+    });
+  }
+})(jQuery);
+</script>
 
 </body>
 </html>
