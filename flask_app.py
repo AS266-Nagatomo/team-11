@@ -172,26 +172,55 @@ def get_books():
         genre = request.form.get("genre")
         if genre == "descend":
             books = db.session.query(Book).filter(Book.user_id==current_user.id).order_by(Book.point.desc()).all()
-        elif genre == "ascend":
+            return render_template("Book.html", books=books)
+        elif genre == "acsend":
             books = db.session.query(Book).filter(Book.user_id==current_user.id).order_by(Book.point).all()
+            return render_template("Book.html", books=books)
         elif genre == "alpha":
             books = db.session.query(Book).filter(Book.user_id==current_user.id).order_by(Book.title).all()
-    return render_template("Book.html", books=books)
+            return render_template("Book.html", books=books)
+    return redirect("/Book")
 
 
 @app.route("/Anime", methods=["GET", "POST"])
 @login_required
 def get_animes():
-    animes = db.session.query(Anime).filter(Anime.user_id==current_user.id).all()
     if request.method == "GET":
-        return render_template("anime.html", animes=animes)
-    return render_template("anime.html")
+        animes = db.session.query(Anime).filter(Anime.user_id==current_user.id).all()
+        return render_template("Anime.html", animes=animes)
+    else:
+        genre = request.form.get("genre")
+        if genre == "descend":
+            animes = db.session.query(Anime).filter(Anime.user_id==current_user.id).order_by(Anime.point.desc()).all()
+            print("pop")
+            return render_template("Anime.html", animes=animes)
+        elif genre == "acsend":
+            animes = db.session.query(Anime).filter(Anime.user_id==current_user.id).order_by(Anime.point).all()
+            return render_template("Anime.html", animes=animes)
+        elif genre == "alpha":
+            animes = db.session.query(Anime).filter(Anime.user_id==current_user.id).order_by(Anime.title).all()
+            return render_template("Anime.html", animes=animes)
+
+        delete= request.form.get("delete")
+        db.session.query(Anime).filter(Anime.user_id==current_user.id, Anime.title==title).delete()
+    return redirect("/Anime")
 
 
 @app.route("/Movie", methods=["GET", "POST"])
 @login_required
 def get_movies():
-    movies = db.session.query(Movie).filter(Movie.user_id==current_user.id).all()
     if request.method == "GET":
-        return render_template("movie.html", movies=movies)
-    return render_template("movie.html")
+        movies = db.session.query(Movie).filter(Movie.user_id==current_user.id).all()
+        return render_template("Movie.html", movies=movies)
+    else:
+        genre = request.form.get("genre")
+        if genre == "descend":
+            movies = db.session.query(Movie).filter(Movie.user_id==current_user.id).order_by(Movie.point.desc()).all()
+            return render_template("Movie.html", movies=movies)
+        elif genre == "acsend":
+            movies = db.session.query(Movie).filter(Movie.user_id==current_user.id).order_by(Movie.point).all()
+            return render_template("Movie.html", movies=movies)
+        elif genre == "alpha":
+            movies = db.session.query(Movie).filter(Movie.user_id==current_user.id).order_by(Movie.title).all()
+            return render_template("Movie.html", movies=movies)
+    return redirect("/Movie")

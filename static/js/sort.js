@@ -27,7 +27,7 @@ $(".custom-select").each(function() {
     event.stopPropagation();
   });
   $(".custom-option").on("click", function() {
-    $(this).parents(".custom-select-wrapper").find("select").val($(this).data("value"));
+    $(this).parents(".custom-select-wrapper").find("select").val($(this).data("value")).change();
     $(this).parents(".custom-options").find(".custom-option").removeClass("selection");
     $(this).addClass("selection");
     $(this).parents(".custom-select").removeClass("opened");

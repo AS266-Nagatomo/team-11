@@ -78,7 +78,7 @@
 
 <form action="/Book" method="post">
     <div class="form-item">
-        <select name="genre" class="custom-select sources" placeholder="並べ替え"  onchange="alert('working')">
+        <select name="genre" class="custom-select sources" placeholder="並べ替え"  onchange="this.form.submit()">
         <option value="descend">点数降順</option>
         <option value="acsend">点数昇順</option>
         <option value="alpha">50音順</option>
@@ -86,71 +86,11 @@
     </div>
 </form>
 
-<script type="text/javascript">
-    $(function(){
-      $("#submit_select").change(function(){
-        $("#submit_form").submit();
-      });
-    });
-</script>
 
 
 <section>
     <div>
         <div class="acc-container">
-            <!--ここから-->
-            <div class="acc-btn">
-                <div class="acc_title">
-                    <div class="title">禁断の魔術</div>
-                    95pt
-                </div>
-            </div>
-            <div class="acc-content">
-                <div class="acc_text">
-                    おもろい
-                    <div class="row">
-                        <div class="delete-confirm small">
-                            <button class="delete">
-                                <i class="fa fa-trash-o fa-lg"></i>
-                            </button>
-                            <button class="yes">
-                                <i class="fa fa-check"></i>
-                            </button>
-                            <button class="no">
-                                <i class="fa fa-close"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--ここまでが１リスト-->
-
-            <!--ここから-->
-            <div class="acc-btn">
-                <div class="acc_title">
-                    <div class="title">容疑者Xの献身</div>
-                    90pt
-                </div>
-            </div>
-            <div class="acc-content">
-                <div class="acc_text">
-                    かなしい
-                    <div class="row">
-                        <div class="delete-confirm small">
-                            <button class="delete">
-                                <i class="fa fa-trash-o fa-lg"></i>
-                            </button>
-                            <button class="yes">
-                                <i class="fa fa-check"><a href="#"></a></i>
-                            </button>
-                            <button class="no">
-                                <i class="fa fa-close"><a href="#"></a></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--ここまでが１リスト-->
 
             {% for book in books %}
             <div class="acc-btn">
@@ -213,22 +153,6 @@ open_close("menubar_hdr", "menubar");
 <!--デリートボタン用JS-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="js/delete_button.js"></script>
-
-<!--<script type="text/javascript" src="./scripts/jquery.select-submit-change.js"></script>
-<script type="text/javascript">
-$(function() {
-  $("[id^=submit_select]").SelectSubmitChange();
-});
-;(function($) {
-  $.fn.SelectSubmitChange = function(){
-    console.log("setup")
-    $(this).change(function(){
-        console.log("changed")
-      $(this).parent("form").submit();
-    });
-  }
-})(jQuery);
-</script>-->
 
 </body>
 </html>
