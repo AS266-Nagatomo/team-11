@@ -111,14 +111,9 @@ def get_index():
 
 @app.route("/api/ranking", methods=["GET", "POST"])
 def get_ranking():
-    """books = db.session.query(Book).distinct(Book.point).limit(5).all()
-    animes = db.session.query(Anime).distinct(Anime.point).limit(5).all()
-    animes = db.session.query(Anime.id, sa.func.sum(Anime.point)).group_by(Anime.id).limit(5).all()
-    print(animes)
-    movies = db.session.query(Movie).distinct(Movie.point).limit(5).all()"""
-    books = [tuple(row) for row in db.session.query(Book.api_id, sa.func.sum(Book.point)).group_by(Book.id).limit(5)]
-    animes = [tuple(row) for row in db.session.query(Anime.api_id, sa.func.sum(Anime.point)).group_by(Anime.id).limit(5)]
-    movies = [tuple(row) for row in db.session.query(Movie.api_id, sa.func.sum(Movie.point)).group_by(Movie.id).limit(5)]
+    books = [tuple(row) for row in db.session.query(Book.api_id, sa.func.sum(Book.point)).group_by(Book.api_id).limit(5)]
+    animes = [tuple(row) for row in db.session.query(Anime.api_id, sa.func.sum(Anime.point)).group_by(Anime.api_id).limit(5)]
+    movies = [tuple(row) for row in db.session.query(Movie.api_id, sa.func.sum(Movie.point)).group_by(Movie.api_id).limit(5)]
     return jsonify(dict(anime=animes, book=books, movie=movies))
 
 
