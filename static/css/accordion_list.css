@@ -1,0 +1,104 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700);
+
+/*
+{
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -o-box-sizing:border-box;
+  box-sizing:border-box;
+}
+*/
+
+.acc-container {
+  width:64%;
+  margin:30px auto 0 auto;
+  -webkit-border-radius:8px;
+  -moz-border-radius:8px;
+  -o-border-radius:8px;
+  border-radius:8px;
+  overflow: hidden;
+}
+
+.acc-btn {
+  width:100%;
+  margin:0 auto;
+  padding:20px 25px;
+  cursor:pointer;
+  background:#dbe8ff;
+  border-bottom:1px solid #eff6ff;
+}
+
+.acc-content {
+  width:100%;
+  margin:0 auto;
+  display: none;
+  background:#eff6ff;
+  padding:30px;
+  height: auto;
+}
+
+.acc_title {
+  font:700 20px/26px 'Lato', sans-serif;
+  color:#798795;
+  display: flex;
+  justify-content:space-between;
+}
+
+/*点数タグ*/
+
+.score {
+  margin-right: 50px;
+  font-size:1.5rem;
+}
+
+
+.acc_text {
+  font:400 16px/24px 'Lato', sans-serif;
+  color:#798795;
+  display: flex;
+  justify-content:space-between;
+}
+
+/*_____________________________________________*/
+
+#book-page {
+	padding: 5% 100px;	/*上下、左右へのコンテンツ内の余白*/
+	position: relative;
+	animation-name: opa1;		/*keyframes.cssで使う@keyframesの指定*/
+	animation-duration: 0.5S;	/*アニメーションの実行時間*/
+	animation-delay: 0.5s;		/*出現するタイミング（秒後）*/
+	animation-fill-mode: both;
+}
+/*h2タグ*/
+#book-page h2 {
+	clear: both;
+	margin-bottom: -10px;	/*下に空けるスペース*/
+	font-size: 2.25rem;		/*文字サイズ。冒頭で指定しているフォントサイズの2.25倍です。*/
+	text-align: center;		/*文字をセンタリング*/
+	letter-spacing: 0.1em;	/*文字間隔を少し広めにとる指定。通常がいいならこの１行削除。*/
+}
+
+/*h2タグ内のspanタグ（装飾文字）*/
+#book-page h2 span {
+	display: inline-block;white-space: nowrap;
+	font-size: 0.875rem;	/*文字サイズ。冒頭で指定しているフォントサイズの0.875倍です。*/
+	border-top: 3px solid #a9d1ec;	/*上の線の幅、線種、色*/
+	padding: 15px 20px 0;	/*上、左右、下への余白*/
+}
+
+/*段落タグ*/
+#book-page p {
+	padding: 0 3% 30px;	/*上、左右、下への余白*/
+}
+/*他、微調整*/
+#book-page h2 + p,
+#book-page h3 + p {
+	margin-top: -5px;
+}
+#book-page p + p {
+	margin-top: -10px;
+}
+#book-page section + section {
+	margin-top: 100px;
+}
+/*---------------------ボタン--------------------------*/
