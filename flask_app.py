@@ -179,6 +179,10 @@ def get_books():
         elif genre == "alpha":
             books = db.session.query(Book).filter(Book.user_id==current_user.id).order_by(Book.title).all()
             return render_template("Book.html", books=books)
+
+        id= request.form.get("target")
+        db.session.query(Book).filter(Book.user_id==current_user.id, Book.id==id).delete()
+        db.session.commit()
     return redirect("/Book")
 
 
@@ -224,4 +228,8 @@ def get_movies():
         elif genre == "alpha":
             movies = db.session.query(Movie).filter(Movie.user_id==current_user.id).order_by(Movie.title).all()
             return render_template("Movie.html", movies=movies)
+        
+        id= request.form.get("target")
+        db.session.query(Movie).filter(Movie.user_id==current_user.id, Movie.id==id).delete()
+        db.session.commit()
     return redirect("/Movie")
