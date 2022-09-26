@@ -60,6 +60,7 @@
       box-shadow: 0 2px 1px rgba(0,0,0,.07);
       background: #fff;
       transition: all .4s ease-in-out;
+      z-index: 4;
 
       opacity: 0;
       visibility: hidden;
