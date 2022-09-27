@@ -121,9 +121,7 @@ def get_ranking():
 @login_required
 def get_mypage():
     if request.method == "POST":
-        genre = request.form.get("genre")
-        title = request.form.get("title")
-        print(title)
+        genre = request.form.get("genre") 
         title_list = request.form.get("title").split("@")
         title = title_list[0]
         reputation= request.form.get("reputation")
