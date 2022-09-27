@@ -205,7 +205,7 @@ def get_animes():
         if genre == "descend":
             animes = db.session.query(Anime).filter(Anime.user_id==current_user.id).order_by(Anime.point.desc()).all()
             print("pop")
-            return render_template("Anime.html", animes=animes)
+            return render_template("anime.html", animes=animes)
         elif genre == "acsend":
             animes = db.session.query(Anime).filter(Anime.user_id==current_user.id).order_by(Anime.point).all()
             return render_template("anime.html", animes=animes)
