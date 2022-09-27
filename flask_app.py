@@ -129,7 +129,7 @@ def get_mypage():
         title = title_list[0]
         reputation= request.form.get("reputation")
         point = request.form.get("point")
-        consent = request.form.get("consent")
+        consent = request.form.get("consent", "False")
         api_id = title_list[1]
 
         anime = Anime()
@@ -142,7 +142,7 @@ def get_mypage():
             movie.user_id = current_user.id
             movie.point = point
             movie.api_id = api_id
-            movie.consent = True
+            movie.consent = consent
             db.session.add(movie)
             db.session.commit()
         elif genre == "book":
@@ -151,7 +151,7 @@ def get_mypage():
             book.point = point
             book.user_id = current_user.id
             book.api_id = api_id
-            book.consent = True
+            book.consent = consent
             db.session.add(book)
             db.session.commit()
         elif genre == "anime":
@@ -160,10 +160,10 @@ def get_mypage():
             anime.point = point
             anime.user_id = current_user.id
             anime.api_id = api_id
-            anime.consent = True
+            anime.consent = consent
             db.session.add(anime)
             db.session.commit()
-        
+
     else:
         return render_template("Mypage.html")
     return render_template("Mypage.html")
