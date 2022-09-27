@@ -30,6 +30,7 @@ class Anime(db.Model):
     point = db.Column(db.Integer)
     user_id = db.Column(db.Integer)
     api_id = db.Column(db.Integer)
+    consent = db.Column(db.Boolean)
 
 class Book(db.Model):
     __tablename__ = 'book'
@@ -39,6 +40,7 @@ class Book(db.Model):
     point = db.Column(db.Integer)
     user_id = db.Column(db.Integer)
     api_id = db.Column(db.Integer)
+    consent = db.Column(db.Boolean)
 
 class Movie(db.Model):
     __tablename__ = 'movie'
@@ -48,6 +50,7 @@ class Movie(db.Model):
     point = db.Column(db.Integer)
     user_id = db.Column(db.Integer)
     api_id = db.Column(db.Integer)
+    consent = db.Column(db.Boolean)
 
 
 
@@ -111,9 +114,9 @@ def get_index():
 
 @app.route("/api/ranking", methods=["GET", "POST"])
 def get_ranking():
-    books = [tuple(row) for row in db.session.query(Book.api_id, sa.func.sum(Book.point)).group_by(Book.id).limit(5)]
-    animes = [tuple(row) for row in db.session.query(Anime.api_id, sa.func.sum(Anime.point)).group_by(Anime.id).limit(5)]
-    movies = [tuple(row) for row in db.session.query(Movie.api_id, sa.func.sum(Movie.point)).group_by(Movie.id).limit(5)]
+    books = [tuple(row) for row in db.session.query(Book.api_id, sa.func.sum(Book.point)).filter(Book.consent==True).group_by(Book.id).limit(5)]
+    animes = [tuple(row) for row in db.session.query(Anime.api_id, sa.func.sum(Anime.point)).filter(Anime.consent==True).group_by(Anime.id).limit(5)]
+    movies = [tuple(row) for row in db.session.query(Movie.api_id, sa.func.sum(Movie.point)).filter(Movie.consent==True).group_by(Movie.id).limit(5)]
     return jsonify(dict(anime=animes, book=books, movie=movies))
 
 
@@ -126,6 +129,7 @@ def get_mypage():
         title = title_list[0]
         reputation= request.form.get("reputation")
         point = request.form.get("point")
+        consent = request.form.get("consent")
         api_id = title_list[1]
 
         anime = Anime()
@@ -138,6 +142,7 @@ def get_mypage():
             movie.user_id = current_user.id
             movie.point = point
             movie.api_id = api_id
+            movie.consent = True
             db.session.add(movie)
             db.session.commit()
         elif genre == "book":
@@ -146,6 +151,7 @@ def get_mypage():
             book.point = point
             book.user_id = current_user.id
             book.api_id = api_id
+            book.consent = True
             db.session.add(book)
             db.session.commit()
         elif genre == "anime":
@@ -154,8 +160,10 @@ def get_mypage():
             anime.point = point
             anime.user_id = current_user.id
             anime.api_id = api_id
+            anime.consent = True
             db.session.add(anime)
             db.session.commit()
+        
     else:
         return render_template("Mypage.html")
     return render_template("Mypage.html")
