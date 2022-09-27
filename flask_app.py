@@ -199,7 +199,7 @@ def get_books():
 def get_animes():
     if request.method == "GET":
         animes = db.session.query(Anime).filter(Anime.user_id==current_user.id).all()
-        return render_template("Anime.html", animes=animes)
+        return render_template("anime.html", animes=animes)
     else:
         genre = request.form.get("genre")
         if genre == "descend":
@@ -208,10 +208,10 @@ def get_animes():
             return render_template("Anime.html", animes=animes)
         elif genre == "acsend":
             animes = db.session.query(Anime).filter(Anime.user_id==current_user.id).order_by(Anime.point).all()
-            return render_template("Anime.html", animes=animes)
+            return render_template("anime.html", animes=animes)
         elif genre == "alpha":
             animes = db.session.query(Anime).filter(Anime.user_id==current_user.id).order_by(Anime.title).all()
-            return render_template("Anime.html", animes=animes)
+            return render_template("anime.html", animes=animes)
 
         id= request.form.get("target")
         db.session.query(Anime).filter(Anime.user_id==current_user.id, Anime.id==id).delete()
@@ -224,18 +224,18 @@ def get_animes():
 def get_movies():
     if request.method == "GET":
         movies = db.session.query(Movie).filter(Movie.user_id==current_user.id).all()
-        return render_template("Movie.html", movies=movies)
+        return render_template("movie.html", movies=movies)
     else:
         genre = request.form.get("genre")
         if genre == "descend":
             movies = db.session.query(Movie).filter(Movie.user_id==current_user.id).order_by(Movie.point.desc()).all()
-            return render_template("Movie.html", movies=movies)
+            return render_template("movie.html", movies=movies)
         elif genre == "acsend":
             movies = db.session.query(Movie).filter(Movie.user_id==current_user.id).order_by(Movie.point).all()
-            return render_template("Movie.html", movies=movies)
+            return render_template("movie.html", movies=movies)
         elif genre == "alpha":
             movies = db.session.query(Movie).filter(Movie.user_id==current_user.id).order_by(Movie.title).all()
-            return render_template("Movie.html", movies=movies)
+            return render_template("movie.html", movies=movies)
 
         id= request.form.get("target")
         db.session.query(Movie).filter(Movie.user_id==current_user.id, Movie.id==id).delete()
