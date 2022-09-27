@@ -111,9 +111,9 @@ def get_index():
 
 @app.route("/api/ranking", methods=["GET", "POST"])
 def get_ranking():
-    books = [tuple(row) for row in db.session.query(Book.api_id, sa.func.sum(Book.point)).group_by(Book.api_id).limit(5)]
-    animes = [tuple(row) for row in db.session.query(Anime.api_id, sa.func.sum(Anime.point)).group_by(Anime.api_id).limit(5)]
-    movies = [tuple(row) for row in db.session.query(Movie.api_id, sa.func.sum(Movie.point)).group_by(Movie.api_id).limit(5)]
+    books = [tuple(row) for row in db.session.query(Book.api_id, sa.func.sum(Book.point)).group_by(Book.id).limit(5)]
+    animes = [tuple(row) for row in db.session.query(Anime.api_id, sa.func.sum(Anime.point)).group_by(Anime.id).limit(5)]
+    movies = [tuple(row) for row in db.session.query(Movie.api_id, sa.func.sum(Movie.point)).group_by(Movie.id).limit(5)]
     return jsonify(dict(anime=animes, book=books, movie=movies))
 
 
@@ -122,6 +122,8 @@ def get_ranking():
 def get_mypage():
     if request.method == "POST":
         genre = request.form.get("genre")
+        title = request.form.get("title")
+        print(title)
         title_list = request.form.get("title").split("@")
         title = title_list[0]
         reputation= request.form.get("reputation")
@@ -228,7 +230,7 @@ def get_movies():
         elif genre == "alpha":
             movies = db.session.query(Movie).filter(Movie.user_id==current_user.id).order_by(Movie.title).all()
             return render_template("Movie.html", movies=movies)
-        
+
         id= request.form.get("target")
         db.session.query(Movie).filter(Movie.user_id==current_user.id, Movie.id==id).delete()
         db.session.commit()
