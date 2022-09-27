@@ -125,10 +125,10 @@
         </div>
         -->
 
-        <div class="sel sel--search_box">
-            <select name="title" id="searched">
-              <option value="title" disabled>作品のタイトルを選択</option>
-              <option value="title">#####</option>
+        <div class="form-item selectdiv">
+            <label for="title"></label>
+            <select id="searched" name="title">
+                <option value="" disabled selected style="display:none;">検索結果</option>
             </select>
         </div>
 
@@ -192,9 +192,7 @@ open_close("menubar_hdr", "menubar");
 <!--カウンター用JS-->
 <script src="js/counter.js"></script>
 
-<!--サーチセレクタ用JS-->
-<script src="js/search_box.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
 
 <!--許可ボタン用JS-->
 <script src="js/permission_button.js"></script>
@@ -356,6 +354,7 @@ open_close("menubar_hdr", "menubar");
   });
 
 </script>
+
 
 </body>
 </html>
