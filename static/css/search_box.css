@@ -1,137 +1,56 @@
-.search_box{
-    display: block;
-    width: 200px;
-    background: #f8f8f8;
-    margin: 0em 0em 2em ;
-  }
 
-/* ===== Select Box ===== */
-.sel {
-    font-size: 8px;
-    display: inline-block;
-    margin: 0em 0em 3em;
-    width: 350px;
-    background-color: transparent;
-    position: relative;
-    cursor: pointer;
-  }
+.selectdiv {
+  position: relative;
+  /*Don't really need this just for demo styling*/
+  min-width: 200px;
+  padding-bottom: 4rem;
+}
 
-  .sel::before {
-    position: absolute;
-    content: '\f063';
-    font-family: 'FontAwesome';
-    font-size: 2em;
-    color: #838e95;
-    right: 20px;
-    top: calc(50% - 0.5em);
-  }
+/* IE11 hide native button (thanks Matt!) */
+select::-ms-expand {
+display: none;
+}
 
-  .sel.active::before {
-    transform: rotateX(-180deg);
-  }
+.selectdiv:after {
+  content: '<>';
+  font: 17px "Consolas", monospace;
+  color: #333;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+  right: 11px;
+  /*Adjust for position however you want*/
 
-  .sel__placeholder {
-    display: block;
-    font-family: 'Quicksand';
-    font-size: 2.3em;
-    color: #838e95;
-    padding: 0.2em 0.5em;
-    text-align: left;
-    pointer-events: none;
-    user-select: none;
-    visibility: visible;
-  }
+  top: 18px;
+  right: 18px;
+  padding: 0 0 2px;
+  border-bottom: 1px solid #999;
+  /*left line */
 
-  .sel.active .sel__placeholder {
-    visibility: hidden;
-  }
+  position: absolute;
+  pointer-events: none;
+}
 
-  .sel__placeholder::before {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 0.2em 0.5em;
-    content: attr(data-placeholder);
-    visibility: hidden;
-  }
+.selectdiv select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Add some styling */
 
-  .sel.active .sel__placeholder::before {
-    visibility: visible;
-  }
-
-  .sel__box {
-    position: absolute;
-    top: calc(100% + 4px);
-    display: none;
-    list-style-type: none;
-    text-align: left;
-    font-size: 1em;
-    background-color: #eff6ff;
-    width: 100% ;
-    box-sizing: border-box;
-    border: 1px solid #b5b5b5;
-  }
-
-  .sel.active .sel__box {
-    display: block;
-    animation: fadeInUp 500ms;
-  }
-
-  .sel__box__options {
-    display: list-item;
-    font-family: 'Quicksand';
-    font-size: 1.5em;
-    color: #838e95;
-    padding: 0.5em 1em;
-    user-select: none;
-  }
-
-  .sel__box__options::after {
-    content: '\f00c';
-    font-family: 'FontAwesome';
-    font-size: 0.5em;
-    margin-left: 5px;
-    display: none;
-  }
-
-  .sel__box__options.selected::after {
-    display: inline;
-  }
-
-  .sel__box__options:hover {
-    background-color: #ebedef;
-  }
-
-  /* ----- Select Box Black Panther ----- */
-  .sel {
-    border-bottom: 4px solid rgba(0, 0, 0, 0.3);
-  }
-
-  .sel--search_box {
-    z-index: 3;
-  }
-
-  /* ===== Keyframes ===== */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translate3d(0, 20px, 0);
-    }
-
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  @keyframes fadeOut {
-    from {
-      opacity: 1;
-    }
-
-    to {
-      opacity: 0;
-    }
-  }
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: 50px;
+  float: left;
+  margin: 5px 0px;
+  padding: 0px 24px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #333;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  -ms-word-break: normal;
+  word-break: normal;
+}
