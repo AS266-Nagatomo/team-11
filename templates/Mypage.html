@@ -1,360 +1,339 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Reading-Record/My page</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="思い出を記録します">
-<meta name="keywords" content="映画,本,マンガ,アニメ,記録">
-<link rel="stylesheet" href="css/style.css">
-<script src="js/openclose.js"></script>
-<script src="js/fixmenu_pagetop.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/select.css">
-<link rel="stylesheet" type="text/css" href="css/counter.css">
-<link rel="stylesheet" type="text/css" href="css/button-mypage.css">
-<link rel="stylesheet" type="text/css" href="css/search_box.css">
-<link rel="stylesheet" type="text/css" href="css/permission_button.css">
-<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Lato|Quicksand" rel="stylesheet">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="思い出を記録します">
+        <meta name="keywords" content="映画,本,マンガ,アニメ,記録">
+      
+        <title>Reading-Record/My page</title>
+      
+        <script src="js/openclose.js"></script>
+        <script src="js/fixmenu_pagetop.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+      
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/select.css">
+        <link rel="stylesheet" type="text/css" href="css/counter.css">
+        <link rel="stylesheet" type="text/css" href="css/button-mypage.css">
+        <link rel="stylesheet" type="text/css" href="css/search_box.css">
+        <link rel="stylesheet" type="text/css" href="css/permission_button.css">
+        <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lato|Quicksand" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    </head>
 
-<body>
+    <body>
 
-<div id="container">
+        <div id="container">
 
-<header>
-<h1 id="logo"><a href="/"><img src="images/logo.png" alt="logo"></a></h1>
-</header>
+            <header>
+            <h1 id="logo"><a href="/"><img src="images/logo.png" alt="logo"></a></h1>
+            </header>
 
-<!--開閉メニュー-->
-<nav id="menubar">
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/Mypage">My page</a></li>
-    <br>
-    <li><a href="/Movie">Movie</a></li>
-    <li><a href="/Book">Book</a></li>
-    <li><a href="/Anime">Anime</a></li>
-    <br>
-    <li><a href="/sign-out">Sign out</a></li>
-  </ul>
-</nav>
+            <!--開閉メニュー-->
+            <nav id="menubar">
+              <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/Mypage">My page</a></li>
+                <br>
+                <li><a href="/Movie">Movie</a></li>
+                <li><a href="/Book">Book</a></li>
+                <li><a href="/Anime">Anime</a></li>
+                <br>
+                <li><a href="/sign-out">Sign out</a></li>
+              </ul>
+            </nav>
 
-<div id="contents">
+            <div id="contents">
 
-<section>
+                <section>
+                    <h2>My page<br><span>マイページ</span></h2>
 
-<h2>My page<br><span>マイページ</span></h2>
+                    <center>
+                        <dd>アイコンをクリックして、あなたの思い出を振り返りましょう。</dd>
+                        <br>
+                        <br>
+                    </center>
 
-<center>
-<dd>アイコンをクリックして、あなたの思い出を振り返りましょう。</dd>
-<br>
-<br>
-</center>
+                    <section class="Mypage_button">
+                        <button class="cta">
+                            <span> <a class="under" href="/Movie">Movie</a></span>
+                            <svg viewBox="0 0 13 10" height="10px" width="15px">
+                            <path d="M1,5 L11,5"></path>
+                            <polyline points="8 1 12 5 8 9"></polyline>
+                            </svg>
+                        </button>
+                        <button class="cta">
+                            <span><a class="under" href="/Book">Book</a></span>
+                            <svg viewBox="0 0 13 10" height="10px" width="15px">
+                            <path d="M1,5 L11,5"></path>
+                            <polyline points="8 1 12 5 8 9"></polyline>
+                            </svg>
+                        </button>
+                        <button class="cta">
+                            <span><a class="under" href="/Anime">Anime</a></span>
+                            <svg viewBox="0 0 13 10" height="10px" width="15px">
+                            <path d="M1,5 L11,5"></path>
+                            <polyline points="8 1 12 5 8 9"></polyline>
+                            </svg>
+                        </button>
+                    </section>
 
-<!--旧ボタンシステム
-<div class="list">
-<li><a href="/Movie"><img src="images/icon_movie.png" alt="Movie"></a></li>
-</div>
+                </section>
 
-<div class="list">
-<li><a href="/Book"><img src="images/icon_book.png" alt="Book"></a></li>
-</div>
+                <section>
+                    <h2>Addition<br><span>思い出の追加</span></h2>
 
-<div class="list">
-<li><a href="/Anime"><img src="images/icon_anime.png" alt="Anime"></a></li>
-</div>
--->
+                    <div class="form-wrapper">
+                        <h1 id="form-top">思い出を追加する</h1>
+                        <form method="POST">
+                            <div class="form-item">
+                                <select name="genre" id="sources" class="custom-select sources" placeholder="ジャンル">
+                                  <option value="movie">映画</option>
+                                  <option value="book">書籍</option>
+                                  <option value="anime">アニメ</option>
+                                </select>
+                            </div>
 
-<section class="Mypage_button">
-    <button class="cta">
-        <span> <a class="under" href="/Movie">Movie</a></span>
-        <svg viewBox="0 0 13 10" height="10px" width="15px">
-        <path d="M1,5 L11,5"></path>
-        <polyline points="8 1 12 5 8 9"></polyline>
-        </svg>
-    </button>
-    <button class="cta">
-        <span><a class="under" href="/Book">Book</a></span>
-        <svg viewBox="0 0 13 10" height="10px" width="15px">
-            <path d="M1,5 L11,5"></path>
-            <polyline points="8 1 12 5 8 9"></polyline>
-        </svg>
-    </button>
-    <button class="cta">
-        <span><a class="under" href="/Anime">Anime</a></span>
-        <svg viewBox="0 0 13 10" height="10px" width="15px">
-            <path d="M1,5 L11,5"></path>
-            <polyline points="8 1 12 5 8 9"></polyline>
-        </svg>
-    </button>
+                            <dd>&emsp;<dd>
 
-</section>
+                            <div class="form-item">
+                                  <label for="title"></label>
+                                  <input id="kensaku" type="search" name="searched" required="required" placeholder="作品のタイトルを検索" autocomplete="off">
+                            </div>
 
-</section>
+                            <div class="form-item selectdiv">
+                                  <label for="title"></label>
+                                  <select id="searched" name="title">
+                                      <option value="" disabled selected style="display:none;">検索結果</option>
+                                  </select>
+                            </div>
 
-<section>
-  <h2>Addition<br><span>思い出の追加</span></h2>
+                            <div class="form-item">
+                                  <label for="comment"></label>
+                                  <input type="text" name="reputation" required="required" placeholder="ひとことコメント" autocomplete="off">
+                            </div>
 
-    <div class="form-wrapper">
-      <h1 id="form-top">思い出を追加する</h1>
-      <form method="POST">
-        <div class="form-item">
-            <select name="genre" id="sources" class="custom-select sources" placeholder="ジャンル">
-              <option value="movie">映画</option>
-              <option value="book">書籍</option>
-              <option value="anime">アニメ</option>
-            </select>
-        </div>
+                            <div class="counter">
+                                <div class="range-slider">
+                                    <span id="rs-bullet" class="rs-label">0</span>
+                                    <input name="point"id="rs-range-line" class="rs-range" required="required" type="range" value="0" min="0" max="100">
+                                </div>
 
-        <dd>&emsp;<dd>
+                            <div class="button-panel">
+                              <input type="submit" class="button" title="add" value="追加する">
+                            </div>
 
-        <div class="form-item">
-            <label for="title"></label>
-            <input id="kensaku" type="search" name="searched" required="required" placeholder="作品のタイトルを検索" autocomplete="off">
-        </div>
-
-        <!--
-        <div class="form-item">
-          <select name="title" id="searched" placeholder="検索結果">
-          </select>
-        </div>
-        -->
-
-        <div class="form-item selectdiv">
-            <label for="title"></label>
-            <select id="searched" name="title">
-                <option value="" disabled selected style="display:none;">検索結果</option>
-            </select>
-        </div>
-
-        <div class="form-item">
-            <label for="comment"></label>
-            <input type="text" name="reputation" required="required" placeholder="ひとことコメント" autocomplete="off">
-        </div>
-
-        <div class="counter">
-          <div class="range-slider">
-            <span id="rs-bullet" class="rs-label">0</span>
-            <input name="point"id="rs-range-line" class="rs-range" required="required" type="range" value="0" min="0" max="100">
-          </div>
-
-        <div class="button-panel">
-          <input type="submit" class="button" title="add" value="追加する">
-        </div>
-
-        <div class="permission_check">
-            <div class="balloon2-right">
-                <h9>ランキング作成のための評価点提供に<br>ご協力をお願いします</h9>
+                            <div class="permission_check">
+                                <div class="balloon2-right">
+                                    <h9>ランキング作成のための評価点提供に<br>ご協力をお願いします</h9>
+                                </div>
+                                <div class="toggle-btn">
+                                    <input type="checkbox" name="consent" class="cb-value" value="true"/>
+                                    <span class="round-btn"></span>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="form-footer">
+                        </div>
+                    </div>
+                </section>
             </div>
-            <div class="toggle-btn">
-                <input type="checkbox" name="consent" class="cb-value" value="true"/>
-                <span class="round-btn"></span>
-            </div>
+            <!--/#contents-->
+
+            <footer>
+            <small>Copyright&copy; <a href="/">Reading-Record</a> All Rights Reserved.</small>
+            <span class="pr"><a href="https://template-party.com/" target="_blank">《Web Design:Template-Party》</a></span>
+            </footer>
+
         </div>
-      </form>
-      <div class="form-footer">
-      </div>
-    </div>
-</section>
-</div>
-<!--/#contents-->
+        <!--/#container-->
 
-<footer>
-<small>Copyright&copy; <a href="/">Reading-Record</a> All Rights Reserved.</small>
-<span class="pr"><a href="https://template-party.com/" target="_blank">《Web Design:Template-Party》</a></span>
-</footer>
+        <p class="nav-fix-pos-pagetop"><a href="#">↑</a></p>
 
-</div>
-<!--/#container-->
+        <!--メニュー開閉ボタン-->
+        <div id="menubar_hdr" class="close"></div>
 
-<p class="nav-fix-pos-pagetop"><a href="#">↑</a></p>
+        <!--メニューの開閉処理-->
+        <script>
+        open_close("menubar_hdr", "menubar");
+        </script>
 
-<!--メニュー開閉ボタン-->
-<div id="menubar_hdr" class="close"></div>
+        <!--lightbox用jsファイルの読み込み-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox-plus-jquery.min.js"></script>
 
-<!--メニューの開閉処理-->
-<script>
-open_close("menubar_hdr", "menubar");
-</script>
+        <!--セレクト用JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="js/select.js"></script>
 
-<!--lightbox用jsファイルの読み込み-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox-plus-jquery.min.js"></script>
-
-<!--セレクト用JS-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="js/select.js"></script>
-
-<!--カウンター用JS-->
-<script src="js/counter.js"></script>
+        <!--カウンター用JS-->
+        <script src="js/counter.js"></script>
 
 
 
-<!--許可ボタン用JS-->
-<script src="js/permission_button.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <!--許可ボタン用JS-->
+        <script src="js/permission_button.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-<script>
-  $(function() {
-      //定数
-      const IMG_URL = 'https://image.tmdb.org/t/p/w1280';
-      const main = document.getElementById("main")
+        <script>
+          $(function() {
+              //定数
+              const IMG_URL = 'https://image.tmdb.org/t/p/w1280';
+              const main = document.getElementById("main")
 
-      //apiをfetchで起動
-      async function getData(url, genre){
-          const res = await fetch(url);
-          const data = await res.json()
+              //apiをfetchで起動
+              async function getData(url, genre){
+                  const res = await fetch(url);
+                  const data = await res.json()
 
-          if (genre == "book"){
-              create_books(data.items)
-          }
-          else if (genre == "anime"){
-              create_animes(data.results)
-          }
-          else{
-              create_movies(data.results)
-          }
-
-      }
-
-      //書籍の情報をHTMLに追加
-      function create_books(books){
-          var select = document.getElementById("searched");
-          while (select.lastChild){
-              select.removeChild(select.lastChild);
-          }
-          //var api_id = document.getElementById("api_id");
-
-          books.forEach((book) => {
-              //オブジェクトから各変数に格納
-              const vi = book.volumeInfo;
-              const title = vi.title;
-              const isbn = vi.industryIdentifiers[1].identifier;
-
-              //bookパネルを作成
-              const bookEl = document.createElement("option")
-
-              bookEl.text = title;
-              bookEl.value = title + "@" + isbn;
-
-              select.appendChild(bookEl);
-          });
-
-        }
-
-      //アニメの情報をHTMLに追加
-      function create_animes(animes){
-
-          //TVドラマからジャンルがアニメのものかを判断
-          function isAnime(anime){
-              var genres = anime.genre_ids
-              for(var i = 0; i < genres.length; i++){
-                  if (genres[i] === 16){
-                      return true
+                  if (genre == "book"){
+                      create_books(data.items)
                   }
+                  else if (genre == "anime"){
+                      create_animes(data.results)
+                  }
+                  else{
+                      create_movies(data.results)
+                  }
+
               }
-              return false
-          }
-          var select = document.getElementById("searched");
-          while (select.lastChild){
-              select.removeChild(select.lastChild);
-          }
 
-          animes.forEach((anime) => {
-              // オブジェクトから各変数に格納
-              const {
-              name,
-              id
-              } = anime
+              //書籍の情報をHTMLに追加
+              function create_books(books){
+                  var select = document.getElementById("searched");
+                  while (select.lastChild){
+                      select.removeChild(select.lastChild);
+                  }
 
-              var isanime = isAnime(anime)
+                  books.forEach((book) => {
+                      //オブジェクトから各変数に格納
+                      const vi = book.volumeInfo;
+                      const title = vi.title;
+                      const isbn = vi.industryIdentifiers[1].identifier;
 
-              if (!isanime){ return; }
+                      //bookパネルを作成
+                      const bookEl = document.createElement("option")
+
+                      bookEl.text = title;
+                      bookEl.value = title + "@" + isbn;
+
+                      select.appendChild(bookEl);
+                  });
+
+                }
+
+              //アニメの情報をHTMLに追加
+              function create_animes(animes){
+
+                  //TVドラマからジャンルがアニメのものかを判断
+                  function isAnime(anime){
+                      var genres = anime.genre_ids
+                      for(var i = 0; i < genres.length; i++){
+                          if (genres[i] === 16){
+                              return true
+                          }
+                      }
+                      return false
+                  }
+                  var select = document.getElementById("searched");
+                  while (select.lastChild){
+                      select.removeChild(select.lastChild);
+                  }
+
+                  animes.forEach((anime) => {
+                      // オブジェクトから各変数に格納
+                      const {
+                      name,
+                      id
+                      } = anime
+
+                      var isanime = isAnime(anime)
+
+                      if (!isanime){ return; }
 
 
-              // Animeパネルを作成
-              const animeEl = document.createElement('option')
+                      // Animeパネルを作成
+                      const animeEl = document.createElement('option')
 
-              animeEl.text = name;
-              animeEl.value = name + "@" + id;
+                      animeEl.text = name;
+                      animeEl.value = name + "@" + id;
 
-              select.appendChild(animeEl);
+                      select.appendChild(animeEl);
+
+                  });
+              }
+
+              //映画の情報をHTMLに追加
+              function create_movies(movies){
+                  var select = document.getElementById("searched");
+                  while (select.lastChild){
+                      select.removeChild(select.lastChild);
+                  }
+
+                  movies.forEach((movie) => {
+                      // オブジェクトから各変数に格納
+                      const {
+                      title,
+                      id
+                      } = movie
+
+                      // Movieパネルを作成
+                      const movieEl = document.createElement('option')
+
+                      movieEl.text = title;
+                      movieEl.value = title + "@" + id;
+
+                      select.appendChild(movieEl);
+                  });
+
+              }
+
+              //apiと検索ワードを連携
+              function searchWord(url, searchText, genre){
+
+                  $("#main").empty();
+
+                  if (searchText != ""){
+                      url += searchText;
+
+                      getData(url, genre);
+                      searchText = "";
+                  }
+
+              }
+
+
+              //検索された時にapiを起動させる
+              $("#kensaku").on("input", function(){
+                  var genre = $("#sources").val();
+                  console.log(genre)
+                  var searchText = $(this).val();
+
+                  if (genre === "movie"){
+                      let movies_api = 'https://api.themoviedb.org/3/search/movie?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA&query="';
+                      searchWord(movies_api, searchText, genre)
+
+                  }else if (genre === "book"){
+                      let books_api = 'https://www.googleapis.com/books/v1/volumes?q="';
+                      searchWord(books_api, searchText, genre)
+
+                  }else if (genre === "anime"){
+                      let animes_api = 'https://api.themoviedb.org/3/search/tv?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA&query="';
+                      searchWord(animes_api, searchText, genre)
+
+                  }else{
+                      alert("ジャンルを選択してください")
+                  }
+
+              });
 
           });
-      }
 
-      //映画の情報をHTMLに追加
-      function create_movies(movies){
-          var select = document.getElementById("searched");
-          while (select.lastChild){
-              select.removeChild(select.lastChild);
-          }
-
-          movies.forEach((movie) => {
-              // オブジェクトから各変数に格納
-              const {
-              title,
-              id
-              } = movie
-
-              // Movieパネルを作成
-              const movieEl = document.createElement('option')
-
-              movieEl.text = title;
-              movieEl.value = title + "@" + id;
-
-              select.appendChild(movieEl);
-          });
-
-      }
-
-      //apiと検索ワードを連携
-      function searchWord(url, searchText, genre){
-
-          $("#main").empty();
-
-          if (searchText != ""){
-              url += searchText;
-
-              getData(url, genre);
-              searchText = "";
-          }
-
-      }
+        </script>
 
 
-      //検索された時にapiを起動させる
-      $("#kensaku").on("input", function(){
-          var genre = $("#sources").val();
-          console.log(genre)
-          var searchText = $(this).val();
-
-          if (genre === "movie"){
-              let movies_api = 'https://api.themoviedb.org/3/search/movie?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA&query="';
-              searchWord(movies_api, searchText, genre)
-
-          }else if (genre === "book"){
-              let books_api = 'https://www.googleapis.com/books/v1/volumes?q="';
-              searchWord(books_api, searchText, genre)
-
-          }else if (genre === "anime"){
-              let animes_api = 'https://api.themoviedb.org/3/search/tv?api_key=171292ccf09cbfac848a76942f6ef28f&language=ja-JA&query="';
-              searchWord(animes_api, searchText, genre)
-
-          }else{
-              alert("ジャンルを選択してください")
-          }
-
-      });
-
-  });
-
-</script>
-
-
-</body>
+    </body>
 </html>
